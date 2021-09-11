@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/chartFragment">
+
+    <fragment
+        android:id="@+id/chartFragment"
+        android:name="com.example.clientapp.view.main.fragments.ChartFragment"
+        android:label="fragment_chart"
+        tools:layout="@layout/fragment_chart" >
+        <action
+            android:id="@+id/action_chartFragment_to_historyDeclareFragment"
+            app:destination="@id/historyDeclareFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/meFragment"
+        android:name="com.example.clientapp.view.main.fragments.MeFragment"
+        android:label="fragment_me"
+        tools:layout="@layout/fragment_me" />
+    <fragment
+        android:id="@+id/historyDeclareFragment"
+        android:name="com.example.clientapp.view.main.fragments.HistoryDeclareFragment"
+        android:label="fragment_history_declare"
+        tools:layout="@layout/fragment_history_declare" >
+        <action
+            android:id="@+id/action_historyDeclareFragment_to_meFragment"
+            app:destination="@id/meFragment" />
+    </fragment>
+</navigation>
