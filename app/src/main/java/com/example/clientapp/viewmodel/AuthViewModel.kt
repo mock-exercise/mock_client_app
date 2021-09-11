@@ -30,9 +30,9 @@ class AuthViewModel @Inject constructor(
     }
 
     fun loginAccount(phoneNumber: String) = viewModelScope.launch {
+        Log.e(TAG, "loginAccount: đăng nhập", )
         repository.loginUser(phoneNumber)
     }
-
     // Server Response
     override fun onFailureResponse(failureResponse: FailureResponse) {
 
@@ -72,14 +72,16 @@ class AuthViewModel @Inject constructor(
     }
 
     override fun onUserSignIn(authResponse: AuthResponse) {
+        Log.e(TAG, "onUserSignIn: Server trả về sign-in")
     }
 
     override fun onUserSignUp(authResponse: AuthResponse) {
-        Log.e(TAG, "onUserSignUp: vao day", )
+        Log.e(TAG, "onUserSignUp: da nhan", )
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
+        Log.e(TAG, "onCreate: vao d", )
         service.addCallback(this)
     }
 

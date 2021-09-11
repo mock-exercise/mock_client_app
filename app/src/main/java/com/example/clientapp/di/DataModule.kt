@@ -31,4 +31,6 @@ class DataModule {
     @Provides
     @Singleton
     fun provideAuthRepository(service : AuthService) = AuthRepository(service)
+
+
 }

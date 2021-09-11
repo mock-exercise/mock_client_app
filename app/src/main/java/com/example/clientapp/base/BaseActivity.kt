@@ -1,3 +1,5 @@
+package com.example.clientapp.base
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity

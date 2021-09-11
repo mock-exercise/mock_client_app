@@ -53,7 +53,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
 
-    implementation 'com.github.GiangGiang1105:ConnectorLib:0.1.7'
+    implementation 'com.github.GiangGiang1105:ConnectorLib:0.2.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //room
