@@ -1,6 +1,7 @@
 package com.example.clientapp.di
 
 import android.content.Context
+import com.example.clientapp.model.localsource.DataStoreManager
 import com.example.clientapp.model.remotesource.AuthService
 import com.example.clientapp.model.repository.AuthRepository
 import com.example.connectorlibrary.controller.ServiceControllerUser
@@ -30,7 +31,9 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(service : AuthService) = AuthRepository(service)
+    fun provideUserPreference(@ApplicationContext context: Context) = DataStoreManager(context)
 
-
+    @Provides
+    @Singleton
+    fun provideAuthRepository(service : AuthService, dataStoreManager: DataStoreManager) = AuthRepository(service, dataStoreManager)
 }

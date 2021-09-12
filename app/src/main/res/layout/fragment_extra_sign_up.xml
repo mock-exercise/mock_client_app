@@ -33,6 +33,7 @@
         app:startIconDrawable="@drawable/ic_auth_gender">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Giới tính" />
@@ -44,12 +45,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:startIconDrawable="@drawable/ic_auth_birth">
+        app:startIconDrawable="@drawable/ic_auth_mail">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tct_birth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ngày sinh" />
+            android:hint="Email" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -61,13 +63,14 @@
         app:startIconDrawable="@drawable/ic_auth_id">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="CMND" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
+        android:id="@+id/text_input_birth"
         style="@style/MyTextInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,6 +78,7 @@
         app:startIconDrawable="@drawable/ic_auth_address">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txt_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Địa chỉ" />
@@ -82,7 +86,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button2"
+        android:id="@+id/btn_continue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Tiếp tục"
@@ -95,6 +99,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/text_input_birth" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,4 +6,12 @@
     <string name="declare_fragment_title">Sức khỏe</string>
     <string name="me_fragment_title">Hồ sơ</string>
     <string name="add">add</string>
+
+
+    <string name="success_sign_up">Đăng ký thành công</string>
+    <string name="success_sign_in"> Đăng nhập thành công</string>
+    <string name="success_insert_health"> Khai báo sức khỏe thành công</string>
+
+    <string name="sign_up">Đăng ký</string>
+    <string name="auth_to_login">Bạn đã có tài khoản rồi? Đăng nhập nào</string>
 </resources>
