@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MyTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="MyTextInputLayout">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginHorizontal">20dp</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:background">@drawable/bg_auth_edit_text</item>
+        <item name="android:backgroundTint">#F7F8F8</item>
+
     </style>
 
     <style name="MyAuthButton">
@@ -15,6 +17,14 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">20dp</item>
-        <item name="android:background">@drawable/bg_auth_button</item>
+        <item name="android:background">@drawable/bg_auth_button_selector</item>
+    </style>
+
+    <style name="SelectionOptionDeclare">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_main_layout_history</item>
+        <item name="android:backgroundTint">#EEC2EA</item>
+        <item name="android:paddingHorizontal">15dp</item>
     </style>
 </resources>

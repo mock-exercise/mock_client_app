@@ -13,4 +13,12 @@ class AuthService @Inject constructor(private val service: ServiceControllerUser
     fun registerUserAccount(user: User){
         service.userSignUp(user)
     }
+
+    fun getGender(){
+        service.getGender()
+    }
+
+    fun getActive(){
+        service.getActive()
+    }
 }

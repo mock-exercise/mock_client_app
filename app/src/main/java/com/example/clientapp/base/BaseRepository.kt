@@ -1,4 +1,3 @@
-
 package com.example.clientapp.base
 
 import android.util.Log
@@ -12,7 +11,7 @@ abstract class BaseRepository {
         try {
             Resource.Success(apiCall.invoke())
         } catch (e: Throwable) {
-            Log.e("TAG", "safeApiCall: Khong ket noi", )
+            Log.e("TAG", "Mất kết nối tới server" )
             Resource.Error(e.message)
         }
     }
