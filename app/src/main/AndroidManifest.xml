@@ -21,6 +21,9 @@
         <activity android:name=".view.main.MainActivity">
 
         </activity>
+        <activity android:name=".animation.AnimActivity">
+
+        </activity>
     </application>
 
 </manifest>
