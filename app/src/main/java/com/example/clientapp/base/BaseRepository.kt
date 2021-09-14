@@ -1,4 +1,3 @@
-
 package com.example.clientapp.base
 
 import android.util.Log

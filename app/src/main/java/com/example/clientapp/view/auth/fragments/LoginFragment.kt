@@ -46,6 +46,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 //            )
 //            dialog.startLoading()
             val phoneNumber = binding.txtPhoneNumber.text.toString()
+
             mViewModel.loginAccount(phoneNumber)
 
 //            mViewModel.registerAccount()

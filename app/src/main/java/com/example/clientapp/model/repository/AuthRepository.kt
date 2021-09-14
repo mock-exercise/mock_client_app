@@ -19,7 +19,9 @@ class AuthRepository @Inject constructor(
         service.registerUserAccount(user)
     }
 
+    // handle data store
     suspend fun saveAuthToken(token: Int) = safeApiCall {
         dataStoreManager.saveAccessTokens(token)
     }
+
 }

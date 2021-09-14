@@ -3,6 +3,7 @@ package com.example.clientapp.model.repository
 import com.example.clientapp.base.BaseRepository
 import com.example.clientapp.model.remotesource.HomeService
 import com.example.connectorlibrary.enitity.Health
+import com.example.connectorlibrary.enitity.User
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
@@ -14,39 +15,48 @@ class MainRepository @Inject constructor(
         service.getGender()
     }
 
+    suspend fun getSymptom()= safeApiCall{
+        service.getSymptom()
+    }
+
+    suspend fun getStatus()= safeApiCall{
+        service.getStatus()
+    }
+
     // Insert Dialog
     suspend fun insertHealth(health: Health) = safeApiCall {
         service.insertHealth(health)
     }
 
     // Chart Fragment
-    suspend fun getHistoryCovidVN(){
+    suspend fun getHistoryCovidVN()= safeApiCall{
         service.getHistoryCovidVn()
     }
 
-    suspend fun getHistoryCovidWorld(){
+    suspend fun getHistoryCovidWorld()= safeApiCall{
         service.getHistoryCovidVn()
     }
 
-    fun getStatisticCovidVn(){
+    suspend fun getStatisticCovidVn()= safeApiCall{
         service.getStatisticCovidVn()
     }
 
-    fun getStatisticCovidWorld(){
+    suspend fun getStatisticCovidWorld()= safeApiCall{
         service.getStatisticCovidWorld()
     }
 
     // History Fragment
-    fun getSymptom(){
-        service.getSymptom()
-    }
 
-    fun getUserHealths(){
+    suspend fun getUserHealths()= safeApiCall{
         service.getUserHealths()
     }
 
     // User Fragment
-    fun getUser(userID: Int){
+    suspend fun getUser(userID: Int)= safeApiCall{
         service.getUser(userID)
+    }
+
+    suspend fun updateUser(user:User)= safeApiCall{
+        service.updateUser(user)
     }
 }

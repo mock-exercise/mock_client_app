@@ -18,7 +18,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListener, DatePickerDialog.OnDateSetListener {
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListener,
+    DatePickerDialog.OnDateSetListener {
 
     private val mViewModel: AuthViewModel by activityViewModels()
     override fun handleTasks() {
@@ -35,20 +36,20 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
     }
 
     private fun initListener() {
-        binding.btnRegister.setOnClickListener (this)
+        binding.btnRegister.setOnClickListener(this)
         binding.cbAllow.setOnClickListener(this)
         binding.txtBirth.setOnClickListener(this)
 
         binding.cbAllow.setOnCheckedChangeListener { _, isChecked ->
             binding.btnRegister.isEnabled = isChecked
-        }
 
+        }
     }
 
     @SuppressLint("SetTextI18n")
     override fun onClick(v: View?) {
-        when(v){
-            binding.btnRegister ->{
+        when (v) {
+            binding.btnRegister -> {
                 val phoneNumber = binding.txtPhoneNumber.text.toString()
                 val name = binding.txtName.text.toString()
 
@@ -58,12 +59,11 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
                 mViewModel.registerAccount(
                     User(
                         name = name,
-                        phone_number = phoneNumber,
-                        birthday = simpleFormat,
+                        phone_number = phoneNumber
                     )
                 )
             }
-            binding.txtToLogin ->{
+            binding.txtToLogin -> {
                 controller.popBackStack()
             }
             binding.txtBirth -> {
@@ -73,7 +73,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
                 val day = calendar.get(Calendar.DATE)
 
                 val datePicker = DatePickerDialog(requireContext(), { view, year, month, day ->
-                    binding.txtBirth.setText( "$day-$month-$year")
+                    binding.txtBirth.setText("$day-$month-$year")
                 }, year, month, day)
                 datePicker.show()
             }
@@ -89,6 +89,4 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
     }
-
-
 }

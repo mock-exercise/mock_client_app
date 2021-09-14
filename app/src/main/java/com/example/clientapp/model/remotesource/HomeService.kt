@@ -2,6 +2,7 @@ package com.example.clientapp.model.remotesource
 
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import com.example.connectorlibrary.enitity.Health
+import com.example.connectorlibrary.enitity.User
 import javax.inject.Inject
 
 class HomeService @Inject constructor(private val service: ServiceControllerUser) {
@@ -9,6 +10,14 @@ class HomeService @Inject constructor(private val service: ServiceControllerUser
     // Basic information
     fun getGender(){
         service.getGender()
+    }
+
+    fun getSymptom(){
+        service.getSymptom()
+    }
+
+    fun getStatus(){
+        service.getStatus()
     }
 
     // Insert Dialog
@@ -34,9 +43,6 @@ class HomeService @Inject constructor(private val service: ServiceControllerUser
     }
 
     // History Fragment
-    fun getSymptom(){
-        service.getSymptom()
-    }
 
     fun getUserHealths(){
         service.getUserHealths()
@@ -44,6 +50,10 @@ class HomeService @Inject constructor(private val service: ServiceControllerUser
 
     // User Fragment
     fun getUser(userID: Int){
-        service.getUser(userID)
+        service.getUserInformation(userID)
+    }
+
+    fun updateUser(user: User){
+        service.updateUser(user)
     }
 }

@@ -19,10 +19,49 @@ class MainViewModel @Inject constructor(
     application: Application,
     private val service: ServiceControllerUser,
     private val repository: MainRepository
-): AndroidViewModel(application), LifecycleObserver, CallbackConnector.CallbackConnectorUser {
+) : AndroidViewModel(application), LifecycleObserver, CallbackConnector.CallbackConnectorUser {
 
     companion object {
         val TAG: String = MainViewModel::class.java.simpleName
+    }
+
+    // Data From UI
+
+    var a = MutableLiveData<Long>(1631551598)
+
+    // Basic Data
+    var liGender = MutableLiveData<List<Gender>>()
+        private set
+
+    var liStatus = MutableLiveData<List<Status>>()
+        private set
+
+    var liSymptom = MutableLiveData<List<Symptom>>()
+        private set
+
+    var userID: Int? = null
+
+    // User Data
+    var liUserHealths = MutableLiveData<List<Health>>()
+        private set
+
+    var userInformation = MutableLiveData<User>()
+        private set
+
+    //Handle Data From UI
+
+    var declaredHealth = Health(list_symptom_id = listOf())
+
+    fun addSymptom(idSymptom: Int) {
+
+        val liSymptomID = declaredHealth.list_symptom_id.toMutableList()
+
+        if (liSymptomID.contains(idSymptom)) {
+            liSymptomID.remove(idSymptom)
+        } else {
+            liSymptomID.add(idSymptom)
+        }
+        declaredHealth.list_symptom_id = liSymptomID
     }
 
     // Handle Event
@@ -44,82 +83,206 @@ class MainViewModel @Inject constructor(
     private val applicationContext = getApplication() as MyApplication
 
     // Server Request
-    fun  insertHealth(health: Health)= viewModelScope.launch{
-        repository.insertHealth(health)
+
+    fun getBasicData() {
+        getGender()
+        getSymptom()
+        getStatus()
+    }
+
+    fun getGender() = viewModelScope.launch {
+        repository.getGender()
+    }
+
+    fun getSymptom() = viewModelScope.launch {
+        repository.getSymptom()
+    }
+
+    fun getStatus() = viewModelScope.launch {
+        repository.getStatus()
+    }
+
+    fun insertHealth() = viewModelScope.launch {
+        declaredHealth.declare_time = System.currentTimeMillis()
+        userID?.let {
+            declaredHealth.user_id = it
+        }
+
+        repository.insertHealth(declaredHealth)
+    }
+
+    fun getHistoryCovidVN() = viewModelScope.launch {
+        repository.getHistoryCovidVN()
+    }
+
+    fun getHistoryCovidWorld() = viewModelScope.launch {
+        repository.getHistoryCovidWorld()
+    }
+
+    fun getStatisticCovidVn() = viewModelScope.launch {
+        repository.getHistoryCovidVN()
+    }
+
+    fun getStatisticCovidWorld() = viewModelScope.launch {
+        repository.getStatisticCovidWorld()
+    }
+
+    fun getUserHealths() = viewModelScope.launch {
+        repository.getUserHealths()
+    }
+
+    fun getUserInformation() = viewModelScope.launch {
+        userID?.let {
+            repository.getUser(it)
+        } ?: run {
+            Log.e(TAG, "getUserInformation: Lỗi không nhận được dữ liệu ID")
+        }
     }
 
     // Server Response
     override fun onFailureResponse(failureResponse: FailureResponse) {
-        when (failureResponse.requestCode){
-            RequestCode.INSERT_HEALTH ->{
-                when(failureResponse.responseCode){
+        when (failureResponse.requestCode) {
+            RequestCode.GET_GENDER -> {
+                when (failureResponse.responseCode) {
+                    ResponseCode.ERROR_LIST_GENDER_NULL -> {
+                        showError("OOPS! Nhận dữ liệu giới tính thất bại ")
+                    }
+                }
+            }
+            RequestCode.GET_STATUS -> {
+                when (failureResponse.responseCode) {
+                    ResponseCode.ERROR_LIST_GENDER_NULL -> {
+                        showError("OOPS! Nhận dữ liệu trạng thái thất bại ")
+                    }
+                }
+            }
+            RequestCode.GET_SYMPTOMS -> {
+                when (failureResponse.responseCode) {
+                    ResponseCode.ERROR_LIST_GENDER_NULL -> {
+                        showError("OOPS! Nhận dữ liệu triệu chứng thất bại ")
+                    }
+                }
+            }
+            RequestCode.INSERT_HEALTH -> {
+                when (failureResponse.responseCode) {
                     ResponseCode.ERROR_INSERT_HEALTH ->
                         showError("OOPS! Server không thể thêm khai báo của bạn")
+                }
+            }
+            RequestCode.GET_HEALTHS -> {
+                when (failureResponse.responseCode) {
+                    ResponseCode.ERROR_LIST_HEATHS_NOT_FOUND ->
+                        showError("OOPS! Server không nhận đc dữ liệu sức khỏe của bạn")
+                }
+            }
+            RequestCode.GET_USER -> {
+                when (failureResponse.responseCode) {
+                    ResponseCode.ERROR_USER_NOT_FOUND -> {
+                        showError("OOPS! Không nhận được dữ liệu thông tin user")
+                    }
+                }
+            }
+            RequestCode.UPDATE_USER -> {
+                when (failureResponse.responseCode) {
+                    ResponseCode.ERROR_UPDATE_USER -> {
+                        showError("OOPS! Không thể cập nhật user")
+                    }
                 }
             }
         }
     }
 
-    override fun onGetActive(activeResponse: ActiveResponse) {
-        TODO("Not yet implemented")
-    }
-
     override fun onGetGender(genderResponse: GenderResponse) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onGetHistoryCovidVn(historyCovidResponse: HistoryCovidResponse) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onGetHistoryCovidWorld(historyCovidResponse: HistoryCovidResponse) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onGetStatisticCovidVn(statisticCovidVnResponse: StatisticCovidVnResponse) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onGetStatisticCovidWorld(statisticCovidWorldResponse: StatisticCovidWorldResponse) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onGetStatus(statusResponse: StatusResponse) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onGetSymptom(symptomResponse: SymptomResponse) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onGetUser(user: UserResponse) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onGetUserHealths(healthResponse: HealthResponse) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onInsertHealth(healthResponse: HealthResponse) {
-        when(healthResponse.responseCode){
-            ResponseCode.OK -> MyApplication.showToast(applicationContext, R.string.success_insert_health)
+        when (genderResponse.responseCode) {
+            ResponseCode.SUCCESS -> {
+                liGender.value = genderResponse.listGender
+                Log.e(TAG, "onGetGender: nhan thanh cong", )
+            }
         }
     }
 
+    override fun onGetStatus(statusResponse: StatusResponse) {
+        when (statusResponse.responseCode) {
+            ResponseCode.SUCCESS -> {
+                liStatus.value = statusResponse.listStatuses
+            }
+        }
+    }
+
+    override fun onGetSymptom(symptomResponse: SymptomResponse) {
+        when (symptomResponse.responseCode) {
+            ResponseCode.SUCCESS -> {
+                liSymptom.value = symptomResponse.listSymptom
+            }
+        }
+    }
+
+    override fun onGetHistoryCovidVn(historyCovidResponse: HistoryCovidResponse) {
+
+    }
+
+    override fun onGetHistoryCovidWorld(historyCovidResponse: HistoryCovidResponse) {
+
+    }
+
+    override fun onGetStatisticCovidVn(statisticCovidVnResponse: StatisticCovidVnResponse) {
+
+    }
+
+    override fun onGetStatisticCovidWorld(statisticCovidWorldResponse: StatisticCovidWorldResponse) {
+
+    }
+
+    override fun onGetUserInformation(user: UserResponse) {
+        when (user.responseCode) {
+            ResponseCode.SUCCESS -> {
+                MyApplication.showToast(applicationContext, R.string.success_insert_health)
+                user.user.let {
+                    userInformation.value = it
+                }
+            }
+        }
+    }
+
+    override fun onGetUserHealths(healthResponse: HealthResponse) {
+        when (healthResponse.responseCode) {
+            ResponseCode.SUCCESS -> {
+                MyApplication.showToast(applicationContext, R.string.success_insert_health)
+                liUserHealths.value = healthResponse.listHealths
+            }
+        }
+    }
+
+    override fun onInsertHealth(healthResponse: HealthResponse) {
+        when (healthResponse.responseCode) {
+            ResponseCode.SUCCESS -> {
+                MyApplication.showToast(applicationContext, R.string.success_insert_health)
+                liUserHealths.value = healthResponse.listHealths
+            }
+        }
+    }
+
+    override fun onGetActive(activeResponse: ActiveResponse) {
+    }
+
     override fun onServerConnected() {
-        TODO("Not yet implemented")
+        Log.e(TAG, "onServerConnected: đã connect vs server", )
     }
 
     override fun onUpdateUser(user: UserResponse) {
-        TODO("Not yet implemented")
+        when (user.responseCode) {
+            ResponseCode.SUCCESS -> {
+                MyApplication.showToast(applicationContext, R.string.success_update_user)
+                getUserInformation()
+            }
+        }
     }
 
     override fun onUserSignIn(authResponse: AuthResponse) {
-        TODO("Not yet implemented")
     }
 
     override fun onUserSignUp(authResponse: AuthResponse) {
-        TODO("Not yet implemented")
+
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -132,5 +295,4 @@ class MainViewModel @Inject constructor(
     fun onDestroy() {
         service.removeCallback(this)
     }
-
 }

@@ -25,13 +25,16 @@ class AuthViewModel @Inject constructor(
         val TAG: String = AuthViewModel::class.java.simpleName
     }
 
-    // Handle Event
+    var mInputPhoneNumber: String = ""
 
+    // Handle Event
     var eventLoading = MutableLiveData<Event<Boolean>>()
         private set
 
     var eventError = MutableLiveData<Event<String>>()
         private set
+
+
 
     private fun showLoading(value: Boolean) {
         eventLoading.value = Event(value)
@@ -43,20 +46,23 @@ class AuthViewModel @Inject constructor(
 
     private val applicationContext = getApplication() as MyApplication
 
+    // Handle Datastore
 
-    private fun saveToken(token: Int) = viewModelScope.launch {
+    private fun saveAuthToken(token: Int) = viewModelScope.launch {
         repository.saveAuthToken(token)
     }
 
     // Server Request
     fun registerAccount(userUser: User) = viewModelScope.launch {
         showLoading(true)
+        Log.e(TAG, "registerAccount: đăng ký", )
         repository.registerUserAccount(userUser)
     }
 
     fun loginAccount(phoneNumber: String) = viewModelScope.launch {
         showLoading(true)
         repository.loginUser(phoneNumber)
+        mInputPhoneNumber = phoneNumber
     }
 
     // Server Response
@@ -107,10 +113,12 @@ class AuthViewModel @Inject constructor(
     override fun onGetSymptom(symptomResponse: SymptomResponse) {
     }
 
-    override fun onGetUser(user: UserResponse) {
-    }
 
     override fun onGetUserHealths(healthResponse: HealthResponse) {
+
+    }
+
+    override fun onGetUserInformation(user: UserResponse) {
 
     }
 
@@ -128,9 +136,9 @@ class AuthViewModel @Inject constructor(
     override fun onUserSignIn(authResponse: AuthResponse) {
         showLoading(false)
         when (authResponse.responseCode) {
-            ResponseCode.OK -> {
+            ResponseCode.SUCCESS -> {
                 MyApplication.showToast(applicationContext, R.string.success_sign_in)
-                saveToken(authResponse.user_id)
+                saveAuthToken(authResponse.user_id)
             }
         }
     }
@@ -138,16 +146,16 @@ class AuthViewModel @Inject constructor(
     override fun onUserSignUp(authResponse: AuthResponse) {
         showLoading(false)
         when (authResponse.responseCode) {
-            ResponseCode.OK -> {
+            ResponseCode.SUCCESS -> {
                 MyApplication.showToast(applicationContext, R.string.success_sign_up)
-                saveToken(authResponse.user_id)
+                saveAuthToken(authResponse.user_id)
+//                savePhoneNumber(mInputPhoneNumber)
             }
         }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-        Log.e(TAG, "onCreate: vao di")
         service.addCallback(this)
     }
 
