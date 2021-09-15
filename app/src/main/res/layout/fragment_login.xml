@@ -24,27 +24,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.9">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_auth_string_2"
             android:layout_marginTop="30dp"
+            android:src="@drawable/ic_auth_string_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_app_logo"
             android:layout_marginTop="20dp"
+            android:src="@drawable/ic_app_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,17 +57,18 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             style="@style/MyTextInputLayout"
+            android:layout_marginTop="50dp"
+            android:hint="  Số điện thoại"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView6"
-            android:layout_marginTop="50dp"
             app:startIconDrawable="@drawable/ic_auth_phone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_phone_number"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Số điện thoại" />
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -87,13 +88,13 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_to_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:textColor="@color/black"
             android:text="Bạn chưa có tài khoản  ?  Hãy Đăng ký "
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
