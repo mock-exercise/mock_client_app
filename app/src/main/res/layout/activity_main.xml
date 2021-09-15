@@ -56,10 +56,12 @@
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             android:translationZ="-2dp">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -71,15 +73,16 @@
                     android:layout_height="wrap_content"
                     android:elevation="0dp"
                     app:defaultNavHost="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_anchorGravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:navGraph="@navigation/nav_main" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
+
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,231 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_fragment"
-    tools:context=".view.main.fragments.ChartFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Bản đồ theo dõi"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
+        <import type="com.example.clientapp.viewmodel.MainViewModel" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
-
-    </com.github.mikephil.charting.charts.LineChart>
+        <variable
+            name="viewModel"
+            type="MainViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/bg_chart_bottom_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lineChart">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/linearLayoutCompat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_show_vn_status">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="100dp"
-                android:layout_height="150dp"
-                android:background="@drawable/bg_chart_statistic_table"
-                android:backgroundTint="#E9F0BD"
-                android:elevation="10dp"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_case_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:text="550, 996"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="80dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="32dp"
-                    android:text="Nhiễm bệnh"
-                    app:layout_constraintEnd_toEndOf="@+id/txt_case_number"
-                    app:layout_constraintStart_toStartOf="@+id/txt_case_number"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_case_number" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_chart_statistic_table_child"
-                    android:backgroundTint="#BBD328"
-                    android:gravity="center"
-                    android:text="+ 0"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout1"
-                android:layout_width="100dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/bg_chart_statistic_table"
-                android:backgroundTint="#FAA1A7"
-                android:elevation="10dp"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_death_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:text="550, 996"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="80dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="32dp"
-                    android:text="Nhiễm bệnh"
-                    app:layout_constraintEnd_toEndOf="@+id/txt_death_number"
-                    app:layout_constraintStart_toStartOf="@+id/txt_death_number"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_death_number" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_chart_statistic_table_child"
-                    android:backgroundTint="#7D8E13"
-                    android:gravity="center"
-                    android:text="+ 0"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
-                android:layout_width="100dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/bg_chart_statistic_table"
-                android:backgroundTint="#BDDBF0"
-                android:elevation="10dp"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_recovered_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:text="550, 996"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="80dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="32dp"
-                    android:text="Nhiễm bệnh"
-                    app:layout_constraintEnd_toEndOf="@+id/txt_recovered_number"
-                    app:layout_constraintStart_toStartOf="@+id/txt_recovered_number"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_recovered_number" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_chart_statistic_table_child"
-                    android:backgroundTint="#51591F"
-                    android:gravity="center"
-                    android:text="+ 0"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_fragment"
+        tools:context=".view.main.fragments.ChartFragment">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textView"
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:text="Cập nhật: 15:40, 08/09"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_show_vn_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="32dp"
-            android:text="Button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_show_world_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="72dp"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_show_vn_status"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_show_vn_status"
-            app:layout_constraintTop_toTopOf="@+id/btn_show_vn_status"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
-            android:text="Thông tin dịch bệnh"
-            android:textColor="@color/black"
-            android:textSize="30sp"
+            android:layout_marginTop="10dp"
+            android:text="Bản đồ theo dõi"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        </com.github.mikephil.charting.charts.LineChart>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_chart_bottom_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lineChart">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearLayoutCompat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/bg_chart_statistic_table"
+                    android:backgroundTint="#E9F0BD"
+                    android:elevation="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_case_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="550, 996"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="80dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="32dp"
+                        android:text="Nhiễm bệnh"
+                        app:layout_constraintEnd_toEndOf="@+id/txt_case_number"
+                        app:layout_constraintStart_toStartOf="@+id/txt_case_number"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_case_number" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_chart_statistic_table_child"
+                        android:backgroundTint="#BBD328"
+                        android:gravity="center"
+                        android:text="+ 0"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout1"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/bg_chart_statistic_table"
+                    android:backgroundTint="#FAA1A7"
+                    android:elevation="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_death_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="550, 996"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="80dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="32dp"
+                        android:text="Nhiễm bệnh"
+                        app:layout_constraintEnd_toEndOf="@+id/txt_death_number"
+                        app:layout_constraintStart_toStartOf="@+id/txt_death_number"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_death_number" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_chart_statistic_table_child"
+                        android:backgroundTint="#7D8E13"
+                        android:gravity="center"
+                        android:text="+ 0"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/bg_chart_statistic_table"
+                    android:backgroundTint="#BDDBF0"
+                    android:elevation="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_recovered_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="550, 996"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="80dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="32dp"
+                        android:text="Nhiễm bệnh"
+                        app:layout_constraintEnd_toEndOf="@+id/txt_recovered_number"
+                        app:layout_constraintStart_toStartOf="@+id/txt_recovered_number"
+                        app:layout_constraintTop_toBottomOf="@+id/txt_recovered_number" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_chart_statistic_table_child"
+                        android:backgroundTint="#51591F"
+                        android:gravity="center"
+                        android:text="+ 0"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Cập nhật: 15:40, 08/09"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+                app:layout_constraintVertical_bias="0.0"
+                android:layout_marginBottom="20dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_show_vn_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="@{viewModel.isEnableVNButton}"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_main_button_static_selector"
+                android:text="Việt Nam"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_show_world_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="72dp"
+                android:text="Thế giới"
+                android:enabled="false"
+                android:background="@drawable/bg_main_button_static_selector"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_show_vn_status"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_show_vn_status"
+                app:layout_constraintTop_toTopOf="@+id/btn_show_vn_status"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/view"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/ic_main_vn_selection"
+                android:enabled="false"
+                android:clickable="false"
+                app:layout_constraintEnd_toEndOf="@+id/btn_show_vn_status"
+                app:layout_constraintStart_toStartOf="@+id/btn_show_vn_status"
+                app:layout_constraintTop_toBottomOf="@+id/btn_show_vn_status" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:text="Thông tin dịch bệnh"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/view2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:clickable="false"
+                android:enabled="true"
+                android:background="@drawable/ic_main_world_selector"
+                app:layout_constraintEnd_toEndOf="@+id/btn_show_world_status"
+                app:layout_constraintStart_toStartOf="@+id/btn_show_world_status"
+                app:layout_constraintTop_toTopOf="@+id/view" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

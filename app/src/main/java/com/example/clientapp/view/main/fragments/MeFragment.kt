@@ -20,16 +20,9 @@ import java.util.*
 class MeFragment : Fragment() {
 
     private val mViewModel: MainViewModel by activityViewModels()
-    private val mEmptyArray by lazy { mutableListOf("") }
     private lateinit var binding: FragmentMeBinding
 
-//    private val spinnerAdapter by lazy {
-//        ArrayAdapter(
-//            requireContext(),
-//            R.layout.support_simple_spinner_dropdown_item,
-//            mEmptyArray
-//        )
-//    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

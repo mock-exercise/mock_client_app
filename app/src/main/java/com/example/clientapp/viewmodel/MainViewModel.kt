@@ -51,6 +51,8 @@ class MainViewModel @Inject constructor(
     //Handle Data From UI
 
     var declaredHealth = Health(list_symptom_id = listOf())
+    var isEnableVNButton = MutableLiveData(false)
+        private set
 
     fun resetDeclareHealth() {
         declaredHealth = Health(list_symptom_id = listOf())
@@ -237,8 +239,13 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    override fun onGetHistoryCovidVn(historyCovidResponse: HistoryCovidResponse) {
 
+    override fun onGetHistoryCovidVn(historyCovidResponse: HistoryCovidResponse) {
+        when(historyCovidResponse.responseCode){
+            ResponseCode.SUCCESS ->{
+                
+            }
+        }
     }
 
     override fun onGetHistoryCovidWorld(historyCovidResponse: HistoryCovidResponse) {
