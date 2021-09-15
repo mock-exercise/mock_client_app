@@ -40,7 +40,9 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>() {
     private fun checkTokenUser() {
         dataStoreManager.accessToken.asLiveData().observe(this, {
             if (it != null) {
+                finish()
                 MainActivity.start(this)
+
             }
         })
     }

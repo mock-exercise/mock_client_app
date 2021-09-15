@@ -35,7 +35,6 @@ class AuthViewModel @Inject constructor(
         private set
 
 
-
     private fun showLoading(value: Boolean) {
         eventLoading.value = Event(value)
     }
@@ -55,7 +54,7 @@ class AuthViewModel @Inject constructor(
     // Server Request
     fun registerAccount(userUser: User) = viewModelScope.launch {
         showLoading(true)
-        Log.e(TAG, "registerAccount: đăng ký", )
+        Log.e(TAG, "registerAccount: đăng ký",)
         repository.registerUserAccount(userUser)
     }
 
@@ -156,11 +155,13 @@ class AuthViewModel @Inject constructor(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
+        Log.e(TAG, "onCreate: vao di")
         service.addCallback(this)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
+        Log.e(TAG, "onDestroy: vao di")
         service.removeCallback(this)
     }
 }
