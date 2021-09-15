@@ -4,10 +4,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.clientapp.R
 import com.example.clientapp.base.BaseActivity
@@ -23,11 +27,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    companion object{
+    companion object {
         val TAG: String = MainActivity::class.java.simpleName
 
-        fun start(context: Context){
-            if(context is AppCompatActivity){
+        fun start(context: Context) {
+            if (context is AppCompatActivity) {
                 val intent = Intent(context, MainActivity::class.java)
                 context.startActivity(intent)
                 startActivityAnimation(context)
@@ -40,10 +44,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val mViewModel: MainViewModel by viewModels()
     private val dialog: LoadingDialog by lazy { LoadingDialog(this) }
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var topLevelDestination: Set<Int>
 
-    override fun getActivityBinding(layoutInflater: LayoutInflater)= ActivityMainBinding.inflate(layoutInflater)
 
-    override fun getNavHostFragment()=
+    override fun getActivityBinding(layoutInflater: LayoutInflater) =
+        ActivityMainBinding.inflate(layoutInflater)
+
+    override fun getNavHostFragment() =
         supportFragmentManager.findFragmentById(R.id.mainContainerView) as NavHostFragment
 
     override fun handleTask() {
@@ -56,6 +64,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun initView() {
         // bottom view
         binding.bottomNavigationView.setupWithNavController(controller)
+
+        topLevelDestination =
+            setOf(R.id.chartFragment, R.id.historyDeclareFragment)
+        appBarConfiguration = AppBarConfiguration(
+            topLevelDestination,
+        )
+
+        setupActionBarWithNavController(controller, appBarConfiguration)
+
+        controller.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.chartFragment, R.id.historyDeclareFragment -> {
+                    binding.fabButton.visibility = View.VISIBLE
+                    binding.bottomAppBar.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.bottomAppBar.visibility = View.INVISIBLE
+                    binding.fabButton.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     private fun initObserve() {
@@ -69,7 +98,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         })
 
         mViewModel.userInformation.observe(this, {
-            if(it.active_id == Constant.UserActive.ACTIVE.ordinal){
+            if (it.active_id == Constant.UserActive.ACTIVE.ordinal) {
                 //show dialog
             }
         })
@@ -94,5 +123,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             mViewModel.resetDeclareHealth()
             AddDeclareDialog.newInstance().show(supportFragmentManager, AddDeclareDialog.TAG)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return controller.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

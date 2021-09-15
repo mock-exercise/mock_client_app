@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/chartFragment"
         android:name="com.example.clientapp.view.main.fragments.ChartFragment"
-        android:label="fragment_chart"
+        android:label="Thống kê covid"
         tools:layout="@layout/fragment_chart" >
         <action
             android:id="@+id/action_chartFragment_to_historyDeclareFragment"
@@ -17,12 +17,12 @@
     <fragment
         android:id="@+id/meFragment"
         android:name="com.example.clientapp.view.main.fragments.MeFragment"
-        android:label="fragment_me"
+        android:label="Thông tin cá nhân"
         tools:layout="@layout/fragment_me" />
     <fragment
         android:id="@+id/historyDeclareFragment"
         android:name="com.example.clientapp.view.main.fragments.HistoryDeclareFragment"
-        android:label="fragment_history_declare"
+        android:label="Lịch sử khai báo"
         tools:layout="@layout/fragment_history_declare" >
         <action
             android:id="@+id/action_historyDeclareFragment_to_meFragment"
