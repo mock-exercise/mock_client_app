@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.connectorlibrary.enitity.User"/>
-        <import type="com.example.clientapp.utils.MyStringUtils"/>
-        <import type="com.example.clientapp.viewmodel.MainViewModel"/>
+
+        <import type="com.example.connectorlibrary.enitity.User" />
+
+        <import type="com.example.clientapp.utils.MyStringUtils" />
+
+        <import type="com.example.clientapp.viewmodel.MainViewModel" />
 
         <variable
             name="a"
             type="Long" />
+
         <variable
             name="viewModel"
             type="MainViewModel" />
@@ -38,18 +42,19 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout"
             style="@style/MyTextInputLayout"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
-            android:layout_marginTop="10dp"
             app:startIconDrawable="@drawable/ic_auth_phone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Số điện thoại"
-                android:text="@{MyStringUtils.convertTimestampToDate(viewModel.a)}"/>
+                android:hint="  Số điện thoại"
+                android:text="@{MyStringUtils.convertTimestampToDate(viewModel.a)}"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -64,10 +69,10 @@
                 android:id="@+id/txt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Họ và tên"
-              />
+                android:hint="  Họ và tên"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
-<!--        android:text="@{user.name}"-->
+        <!--        android:text="@{user.name}"-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout3"
@@ -81,10 +86,10 @@
                 android:id="@+id/txt_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Email"
-                />
+                android:hint="  Email"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
-<!--        android:text="@{user.email}-->
+        <!--        android:text="@{user.email}-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout4"
@@ -98,10 +103,9 @@
                 android:id="@+id/txt_gender"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Giới tính"
-               />
+                android:hint="Giới tính" />
         </com.google.android.material.textfield.TextInputLayout>
-<!--        android:text="@{user.phone_number}"-->
+        <!--        android:text="@{user.phone_number}"-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout5"
@@ -115,10 +119,10 @@
                 android:id="@+id/txt_birth"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Ngày sinh"
-               />
+                android:hint="  Ngày sinh"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
-<!--        android:text="@{MyStringUtils.INSTANCE.convertTimestampToDate(user.birthday)}"-->
+        <!--        android:text="@{MyStringUtils.INSTANCE.convertTimestampToDate(user.birthday)}"-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout7"
@@ -132,10 +136,10 @@
                 android:id="@+id/txt_address"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Địa chỉ"
-               />
+                android:hint="  Địa chỉ"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
-<!--        android:text="@{user.address}"-->
+        <!--        android:text="@{user.address}"-->
         <CheckBox
             android:id="@+id/cbAllow"
             android:layout_width="0dp"
@@ -154,16 +158,17 @@
             style="@style/MyAuthButton"
             android:layout_marginBottom="36dp"
             android:enabled="false"
-            android:text="Cập nhật"
+            android:text="  Cập nhật"
+            android:textCursorDrawable="@drawable/cursor_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Spinner
             android:id="@+id/spinner"
+            entries="@{viewModel.liGender}"
             android:layout_width="409dp"
             android:layout_height="wrap_content"
-            entries="@{viewModel.liGender}"
             app:layout_constraintBottom_toTopOf="@+id/cbAllow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
