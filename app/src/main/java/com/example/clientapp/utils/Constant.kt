@@ -8,4 +8,6 @@ object Constant {
     enum class NotifyDialogType{
         ERROR, SUCCESS
     }
+
+    const val HealthyIndex = 4
 }

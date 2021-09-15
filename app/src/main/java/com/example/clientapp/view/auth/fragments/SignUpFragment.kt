@@ -18,8 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListener,
-    DatePickerDialog.OnDateSetListener {
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListener{
 
     private val mViewModel: AuthViewModel by activityViewModels()
     override fun handleTasks() {
@@ -54,7 +53,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
                 val name = binding.txtName.text.toString()
 
                 val date = "00-00-1999"
-                val simpleFormat = SimpleDateFormat("dd-MM-yyyy", Locale.US).parse(date)!!
+                val simpleFormat = SimpleDateFormat("dd-MM-yyyy", Locale.US).parse(date).time
 
                 mViewModel.registerAccount(
                     User(
@@ -86,7 +85,4 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
         attachToRoot: Boolean?
     ): FragmentSignUpBinding = FragmentSignUpBinding.inflate(inflater, container, false)
 
-    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-
-    }
 }

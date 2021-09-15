@@ -7,6 +7,7 @@ import com.example.clientapp.R
 import com.example.clientapp.app.MyApplication
 import com.example.clientapp.base.Event
 import com.example.clientapp.model.repository.MainRepository
+import com.example.clientapp.utils.FuncExtension.convertDateStringToTimestamp
 import com.example.connectorlibrary.callback.CallbackConnector
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import com.example.connectorlibrary.enitity.*
@@ -27,7 +28,6 @@ class MainViewModel @Inject constructor(
 
     // Data From UI
 
-    var a = MutableLiveData<Long>(1631551598)
 
     // Basic Data
     var liGender = MutableLiveData<List<Gender>>()
@@ -52,6 +52,10 @@ class MainViewModel @Inject constructor(
 
     var declaredHealth = Health(list_symptom_id = listOf())
 
+    fun resetDeclareHealth() {
+        declaredHealth = Health(list_symptom_id = listOf())
+    }
+
     fun addSymptom(idSymptom: Int) {
 
         val liSymptomID = declaredHealth.list_symptom_id.toMutableList()
@@ -62,6 +66,15 @@ class MainViewModel @Inject constructor(
             liSymptomID.add(idSymptom)
         }
         declaredHealth.list_symptom_id = liSymptomID
+    }
+
+    fun setUserGender(id: Int){
+        userInformation.value?.gender_id = id
+        Log.e(TAG, "setUserGender: $id", )
+    }
+
+    fun setUserBirthdate(birth: String){
+        userInformation.value?.birthday = birth.convertDateStringToTimestamp()
     }
 
     // Handle Event
@@ -95,10 +108,12 @@ class MainViewModel @Inject constructor(
     }
 
     fun getSymptom() = viewModelScope.launch {
+        Log.e(TAG, "symptom: gui", )
         repository.getSymptom()
     }
 
     fun getStatus() = viewModelScope.launch {
+        Log.e(TAG, "status: gui", )
         repository.getStatus()
     }
 
@@ -107,7 +122,6 @@ class MainViewModel @Inject constructor(
         userID?.let {
             declaredHealth.user_id = it
         }
-
         repository.insertHealth(declaredHealth)
     }
 
@@ -139,6 +153,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun updateUserInformation() = viewModelScope.launch{
+        userInformation.value?.let { repository.updateUser(it) }
+    }
+
     // Server Response
     override fun onFailureResponse(failureResponse: FailureResponse) {
         when (failureResponse.requestCode) {
@@ -151,14 +169,14 @@ class MainViewModel @Inject constructor(
             }
             RequestCode.GET_STATUS -> {
                 when (failureResponse.responseCode) {
-                    ResponseCode.ERROR_LIST_GENDER_NULL -> {
+                    ResponseCode.ERROR_LIST_STATUS_NULL -> {
                         showError("OOPS! Nhận dữ liệu trạng thái thất bại ")
                     }
                 }
             }
             RequestCode.GET_SYMPTOMS -> {
                 when (failureResponse.responseCode) {
-                    ResponseCode.ERROR_LIST_GENDER_NULL -> {
+                    ResponseCode.ERROR_LIST_SYMPTOMS_NULL -> {
                         showError("OOPS! Nhận dữ liệu triệu chứng thất bại ")
                     }
                 }
@@ -204,6 +222,7 @@ class MainViewModel @Inject constructor(
     override fun onGetStatus(statusResponse: StatusResponse) {
         when (statusResponse.responseCode) {
             ResponseCode.SUCCESS -> {
+                Log.e(TAG, "onGetstatus: nhan thanh cong", )
                 liStatus.value = statusResponse.listStatuses
             }
         }
@@ -212,6 +231,7 @@ class MainViewModel @Inject constructor(
     override fun onGetSymptom(symptomResponse: SymptomResponse) {
         when (symptomResponse.responseCode) {
             ResponseCode.SUCCESS -> {
+                Log.e(TAG, "onGetsymptom: nhan thanh cong", )
                 liSymptom.value = symptomResponse.listSymptom
             }
         }
@@ -236,7 +256,7 @@ class MainViewModel @Inject constructor(
     override fun onGetUserInformation(user: UserResponse) {
         when (user.responseCode) {
             ResponseCode.SUCCESS -> {
-                MyApplication.showToast(applicationContext, R.string.success_insert_health)
+                MyApplication.showToast(applicationContext, R.string.success_get_user_information)
                 user.user.let {
                     userInformation.value = it
                 }
@@ -247,7 +267,7 @@ class MainViewModel @Inject constructor(
     override fun onGetUserHealths(healthResponse: HealthResponse) {
         when (healthResponse.responseCode) {
             ResponseCode.SUCCESS -> {
-                MyApplication.showToast(applicationContext, R.string.success_insert_health)
+                MyApplication.showToast(applicationContext, R.string.success_get_user_health)
                 liUserHealths.value = healthResponse.listHealths
             }
         }
@@ -265,9 +285,7 @@ class MainViewModel @Inject constructor(
     override fun onGetActive(activeResponse: ActiveResponse) {
     }
 
-    override fun onServerConnected() {
-        Log.e(TAG, "onServerConnected: đã connect vs server", )
-    }
+
 
     override fun onUpdateUser(user: UserResponse) {
         when (user.responseCode) {
@@ -285,9 +303,13 @@ class MainViewModel @Inject constructor(
 
     }
 
+    override fun onServerConnected() {
+        Log.e(TAG, "onServerConnected: connect thanh cong", )
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-        Log.e(AuthViewModel.TAG, "onCreate: vao di")
+        Log.e(TAG, "addCallback: vao di")
         service.addCallback(this)
     }
 

@@ -48,7 +48,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun handleTask() {
         initView()
-        setUpData()
 
         initObserve()
         initListener()
@@ -59,14 +58,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.bottomNavigationView.setupWithNavController(controller)
     }
 
-    private fun setUpData() {
-        mViewModel.getBasicData()
-    }
-
     private fun initObserve() {
         dataStoreManager.accessToken.asLiveData().observe(this, {
             if (it != null) {
                 mViewModel.userID = it
+
+                mViewModel.getBasicData()
                 mViewModel.getUserInformation()
             }
         })
@@ -91,7 +88,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun initListener() {
+        lifecycle.addObserver(mViewModel)
+
         binding.fabButton.setOnClickListener {
+            mViewModel.resetDeclareHealth()
             AddDeclareDialog.newInstance().show(supportFragmentManager, AddDeclareDialog.TAG)
         }
     }

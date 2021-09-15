@@ -1,5 +1,6 @@
 package com.example.clientapp.view.main.fragments
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.example.clientapp.R
 import com.example.clientapp.databinding.FragmentMeBinding
 import com.example.clientapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class MeFragment : Fragment() {
@@ -64,6 +66,22 @@ class MeFragment : Fragment() {
         binding.cbAllow.setOnCheckedChangeListener { _, isChecked ->
             binding.btnUpdate.isEnabled = isChecked
         }
+
+        binding.txtBirth.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DATE)
+
+            val datePicker = DatePickerDialog(requireContext(), { view, year, month, day ->
+                binding.txtBirth.apply {
+                    setText(getString(R.string.format_date,day, month, year))
+                    mViewModel.setUserBirthdate(text.toString())
+                }
+            }, year, month, day)
+            datePicker.show()
+        }
+
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
             AdapterView.OnItemClickListener {
             override fun onItemSelected(
@@ -72,7 +90,7 @@ class MeFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-
+                mViewModel.setUserGender(position)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
