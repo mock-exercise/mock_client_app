@@ -15,14 +15,15 @@
             android:id="@+id/fab_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@drawable/main_header_selector"
             android:clickable="true"
             android:contentDescription="@string/add"
             android:elevation="10dp"
             android:focusable="true"
             android:foregroundTint="@drawable/main_header_selector"
-            android:backgroundTint="@drawable/main_header_selector"
-            android:tint="@null"
             android:src="@drawable/ic_add"
+            android:tint="@null"
+            android:translationZ="2dp"
             app:layout_anchor="@id/bottomAppBar"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
@@ -54,15 +55,32 @@
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mainContainerView"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="?attr/actionBarSize"
-            android:elevation="0dp"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_main" />
+            android:scrollbars="vertical"
+            android:translationZ="-2dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/mainContainerView"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="0dp"
+                    app:defaultNavHost="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:navGraph="@navigation/nav_main" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
