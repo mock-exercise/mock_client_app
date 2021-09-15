@@ -46,8 +46,9 @@
                 android:id="@+id/txt_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Số điện thoại"
-                android:text="@{viewModel.userInformation.phone_number}" />
+                android:hint="  Số điện thoại"
+                android:text="@{viewModel.userInformation.phone_number}"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -62,10 +63,10 @@
                 android:id="@+id/txt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Họ và tên"
-                android:text="@{viewModel.userInformation.name}" />
+                android:hint="  Họ và tên"
+                android:text="@{viewModel.userInformation.name}"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
-        <!--        android:text="@{user.name}"-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout3"
@@ -79,12 +80,11 @@
                 android:id="@+id/txt_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Email"
-                android:text="@={viewModel.userInformation.email}" />
+                android:hint="  Email"
+                android:text="@={viewModel.userInformation.email}"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
-        <!--        android:text="@{user.email}-->
 
-        <!--        android:text="@{user.phone_number}"-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout5"
@@ -98,10 +98,11 @@
                 android:id="@+id/txt_birth"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/string_birth"
-                android:text="@{DataBindingUtils.convertTimestampToDate(viewModel.userInformation.birthday)}" />
+                android:hint=" Ngày sinh"
+                android:text="@{DataBindingUtils.convertTimestampToDate(viewModel.userInformation.birthday)}"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
-        <!--        android:text="@{DataBindingUtils.INSTANCE.convertTimestampToDate(user.birthday)}"-->
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout7"
@@ -115,8 +116,9 @@
                 android:id="@+id/txt_address"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Địa chỉ"
-                android:text="@={viewModel.userInformation.address}" />
+                android:hint=" Địa chỉ"
+                android:text="@={viewModel.userInformation.address}"
+                android:textCursorDrawable="@drawable/cursor_color" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
@@ -138,7 +140,8 @@
             android:layout_marginBottom="36dp"
             android:enabled="false"
             android:onClick="@{() -> viewModel.updateUserInformation()}"
-            android:text="Cập nhật"
+            android:text=" Cập nhật"
+            android:textCursorDrawable="@drawable/cursor_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

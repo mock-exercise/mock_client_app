@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.auth.fragments.ExtraSignUpFragment">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView3"
         android:layout_width="372dp"
         android:layout_height="296dp"
@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,8 @@
             android:id="@+id/txt_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Giới tính" />
+            android:hint="  Giới tính"
+            android:textCursorDrawable="@drawable/cursor_color" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -51,7 +52,8 @@
             android:id="@+id/tct_birth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email" />
+            android:hint="  Email"
+            android:textCursorDrawable="@drawable/cursor_color" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -66,7 +68,8 @@
             android:id="@+id/txt_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CMND" />
+            android:hint=" CMND"
+            android:textCursorDrawable="@drawable/cursor_color" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -81,21 +84,22 @@
             android:id="@+id/txt_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Địa chỉ" />
+            android:hint="  Địa chỉ"
+            android:textCursorDrawable="@drawable/cursor_color" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_continue"
+        style="@style/MyAuthButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Tiếp tục"
-        style="@style/MyAuthButton"
         android:drawableEnd="@drawable/ic_auth_right"
-        android:paddingHorizontal="100dp"
-        android:textColor="@color/white"
         android:drawableTint="@color/white"
         android:gravity="center"
+        android:paddingHorizontal="100dp"
+        android:text="Tiếp tục"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
