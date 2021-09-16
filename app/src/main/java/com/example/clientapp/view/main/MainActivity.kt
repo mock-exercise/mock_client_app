@@ -16,7 +16,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.clientapp.R
 import com.example.clientapp.base.BaseActivity
 import com.example.clientapp.databinding.ActivityMainBinding
-import com.example.clientapp.model.localsource.DataStoreManager
+import com.example.clientapp.data.repository.localsource.DataStoreManager
 import com.example.clientapp.utils.Constant
 import com.example.clientapp.utils.LoadingDialog
 import com.example.clientapp.view.main.dialogs.AddDeclareDialog
@@ -93,7 +93,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 mViewModel.userID = it
 
                 mViewModel.getBasicData()
-                mViewModel.getUserInformation()
+                mViewModel.getUserInformationFromServer()
             }
         })
 

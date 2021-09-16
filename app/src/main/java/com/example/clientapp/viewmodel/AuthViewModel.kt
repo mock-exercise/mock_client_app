@@ -6,7 +6,7 @@ import androidx.lifecycle.*
 import com.example.clientapp.R
 import com.example.clientapp.app.MyApplication
 import com.example.clientapp.base.Event
-import com.example.clientapp.model.repository.AuthRepository
+import com.example.clientapp.data.repository.AuthRepository
 import com.example.connectorlibrary.callback.CallbackConnector
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import com.example.connectorlibrary.enitity.*
@@ -98,12 +98,6 @@ class AuthViewModel @Inject constructor(
     }
 
     override fun onGetHistoryCovidWorld(historyCovidResponse: HistoryCovidResponse) {
-    }
-
-    override fun onGetStatisticCovidVn(statisticCovidVnResponse: StatisticCovidVnResponse) {
-    }
-
-    override fun onGetStatisticCovidWorld(statisticCovidWorldResponse: StatisticCovidWorldResponse) {
     }
 
     override fun onGetStatus(statusResponse: StatusResponse) {

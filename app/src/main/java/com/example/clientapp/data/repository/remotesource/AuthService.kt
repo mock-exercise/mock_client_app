@@ -1,4 +1,4 @@
-package com.example.clientapp.model.remotesource
+package com.example.clientapp.data.repository.remotesource
 
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import com.example.connectorlibrary.enitity.User

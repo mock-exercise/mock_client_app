@@ -1,4 +1,4 @@
-package com.example.clientapp.model.remotesource
+package com.example.clientapp.data.repository.remotesource
 
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import com.example.connectorlibrary.enitity.Health
@@ -31,15 +31,7 @@ class HomeService @Inject constructor(private val service: ServiceControllerUser
     }
 
     fun getHistoryCovidWorld(){
-        service.getHistoryCovidVn()
-    }
-
-    fun getStatisticCovidVn(){
-        service.getStatisticCovidVn()
-    }
-
-    fun getStatisticCovidWorld(){
-        service.getStatisticCovidWorld()
+        service.getHistoryCovidWorld()
     }
 
     // History Fragment

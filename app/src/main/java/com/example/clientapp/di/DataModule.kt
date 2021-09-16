@@ -1,9 +1,9 @@
 package com.example.clientapp.di
 
 import android.content.Context
-import com.example.clientapp.model.localsource.DataStoreManager
-import com.example.clientapp.model.remotesource.AuthService
-import com.example.clientapp.model.repository.AuthRepository
+import com.example.clientapp.data.repository.localsource.DataStoreManager
+import com.example.clientapp.data.repository.remotesource.AuthService
+import com.example.clientapp.data.repository.AuthRepository
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import dagger.Module
 import dagger.Provides

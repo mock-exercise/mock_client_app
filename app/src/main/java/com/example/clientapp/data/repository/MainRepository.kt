@@ -1,7 +1,7 @@
-package com.example.clientapp.model.repository
+package com.example.clientapp.data.repository
 
 import com.example.clientapp.base.BaseRepository
-import com.example.clientapp.model.remotesource.HomeService
+import com.example.clientapp.data.repository.remotesource.HomeService
 import com.example.connectorlibrary.enitity.Health
 import com.example.connectorlibrary.enitity.User
 import javax.inject.Inject
@@ -34,15 +34,7 @@ class MainRepository @Inject constructor(
     }
 
     suspend fun getHistoryCovidWorld()= safeApiCall{
-        service.getHistoryCovidVn()
-    }
-
-    suspend fun getStatisticCovidVn()= safeApiCall{
-        service.getStatisticCovidVn()
-    }
-
-    suspend fun getStatisticCovidWorld()= safeApiCall{
-        service.getStatisticCovidWorld()
+        service.getHistoryCovidWorld()
     }
 
     // History Fragment

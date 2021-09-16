@@ -1,5 +1,6 @@
 package com.example.clientapp.utils
 
+import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,6 +27,20 @@ class DataBindingUtils {
                 ex.toString()
             }
         }
+
+        @JvmStatic
+        fun convertPriceToUI(number: Int): String{
+            val strNumber = number.toString()
+            val sb = StringBuilder(strNumber)
+
+            if(sb.length > 3){
+                var index = sb.length - 3
+                do{
+                    sb.insert(index,", " )
+                    index -= 3
+                }while (index > 0)
+            }
+            return sb.toString()
+        }
     }
 }
-

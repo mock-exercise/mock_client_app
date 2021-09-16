@@ -8,7 +8,7 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
 import com.example.clientapp.R
 import com.example.clientapp.databinding.ActivityAuthBinding
-import com.example.clientapp.model.localsource.DataStoreManager
+import com.example.clientapp.data.repository.localsource.DataStoreManager
 import com.example.clientapp.utils.LoadingDialog
 import com.example.clientapp.view.main.MainActivity
 import com.example.clientapp.viewmodel.AuthViewModel

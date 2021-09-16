@@ -1,8 +1,8 @@
-package com.example.clientapp.model.repository
+package com.example.clientapp.data.repository
 
 import com.example.clientapp.base.BaseRepository
-import com.example.clientapp.model.localsource.DataStoreManager
-import com.example.clientapp.model.remotesource.AuthService
+import com.example.clientapp.data.repository.localsource.DataStoreManager
+import com.example.clientapp.data.repository.remotesource.AuthService
 import com.example.connectorlibrary.enitity.User
 import javax.inject.Inject
 

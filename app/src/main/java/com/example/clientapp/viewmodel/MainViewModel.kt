@@ -6,7 +6,10 @@ import androidx.lifecycle.*
 import com.example.clientapp.R
 import com.example.clientapp.app.MyApplication
 import com.example.clientapp.base.Event
-import com.example.clientapp.model.repository.MainRepository
+import com.example.clientapp.data.model.StaticData
+import com.example.clientapp.data.model.TodayStatic
+import com.example.clientapp.data.repository.MainRepository
+import com.example.clientapp.utils.Constant
 import com.example.clientapp.utils.FuncExtension.convertDateStringToTimestamp
 import com.example.connectorlibrary.callback.CallbackConnector
 import com.example.connectorlibrary.controller.ServiceControllerUser
@@ -27,8 +30,6 @@ class MainViewModel @Inject constructor(
     }
 
     // Data From UI
-
-
     // Basic Data
     var liGender = MutableLiveData<List<Gender>>()
         private set
@@ -57,6 +58,18 @@ class MainViewModel @Inject constructor(
     fun resetDeclareHealth() {
         declaredHealth = Health(list_symptom_id = listOf())
     }
+
+//    fun toggleIsEnableVNButton(){
+//
+//        val mIsEnableButton = !isEnableVNButton.value!!
+//        isEnableVNButton.value = mIsEnableButton
+//
+//        if(mIsEnableButton){
+//            getStatisticCovidWorld()
+//        }else{
+//            getStatisticCovidVn()
+//        }
+//    }
 
     fun addSymptom(idSymptom: Int) {
 
@@ -105,16 +118,17 @@ class MainViewModel @Inject constructor(
         getStatus()
     }
 
-    fun getGender() = viewModelScope.launch {
+    private fun getGender() = viewModelScope.launch {
+        Log.e(TAG, "gender: gui", )
         repository.getGender()
     }
 
-    fun getSymptom() = viewModelScope.launch {
+    private fun getSymptom() = viewModelScope.launch {
         Log.e(TAG, "symptom: gui", )
         repository.getSymptom()
     }
 
-    fun getStatus() = viewModelScope.launch {
+    private fun getStatus() = viewModelScope.launch {
         Log.e(TAG, "status: gui", )
         repository.getStatus()
     }
@@ -132,22 +146,15 @@ class MainViewModel @Inject constructor(
     }
 
     fun getHistoryCovidWorld() = viewModelScope.launch {
+        Log.e(TAG, "getHistoryCovidWorld: vao day", )
         repository.getHistoryCovidWorld()
-    }
-
-    fun getStatisticCovidVn() = viewModelScope.launch {
-        repository.getHistoryCovidVN()
-    }
-
-    fun getStatisticCovidWorld() = viewModelScope.launch {
-        repository.getStatisticCovidWorld()
     }
 
     fun getUserHealths() = viewModelScope.launch {
         repository.getUserHealths()
     }
 
-    fun getUserInformation() = viewModelScope.launch {
+    fun getUserInformationFromServer() = viewModelScope.launch {
         userID?.let {
             repository.getUser(it)
         } ?: run {
@@ -239,25 +246,60 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    var mLiHistoryCovid = MutableLiveData<List<HistoryCovid>>()
+        private set
+
+    val mTodayStaticAll = MutableLiveData<MutableList<StaticData>>().apply {
+        value?.add(StaticData(Constant.StatusCovid.CASE.numberIndex))
+        value?.add(StaticData(Constant.StatusCovid.DEATH.numberIndex))
+        value?.add(StaticData(Constant.StatusCovid.RECOVERED.numberIndex))
+    }
+
 
     override fun onGetHistoryCovidVn(historyCovidResponse: HistoryCovidResponse) {
         when(historyCovidResponse.responseCode){
             ResponseCode.SUCCESS ->{
-                
+                Log.e(TAG, "onGetHistoryCovidVn: nhan thanh cong", )
+                val historyCovid = historyCovidResponse.listHistoryCovid
+                val lastInx = historyCovid.size - 1
+
+                mTodayStaticAll.value = historyCovid.map {
+                    StaticData(it.status, TodayStatic(it.listPeopleInDay[lastInx].people, it.listPeopleInDay[lastInx].people - it.listPeopleInDay[lastInx - 1].people))
+                }.toMutableList()
+
+
+                var index = 1
+                val a = historyCovid[0].listPeopleInDay.dropLast(1).map {
+                    PeopleInDay(it.day, historyCovid[0].listPeopleInDay[index++].people - it.people )
+                }
+
+                historyCovid[0].listPeopleInDay = a
+                mLiHistoryCovid.value = historyCovid
             }
         }
     }
 
     override fun onGetHistoryCovidWorld(historyCovidResponse: HistoryCovidResponse) {
+        when(historyCovidResponse.responseCode){
+            ResponseCode.SUCCESS ->{
+                Log.e(TAG, "onGetHistoryCovidWorld: nhan thanh cong", )
+                val historyCovid = historyCovidResponse.listHistoryCovid
+                val lastInx = historyCovid.size - 1
 
-    }
+                mTodayStaticAll.value = historyCovid.map {
+                    StaticData(it.status, TodayStatic(it.listPeopleInDay[lastInx].people, it.listPeopleInDay[lastInx].people - it.listPeopleInDay[lastInx - 1].people))
+                }.toMutableList()
 
-    override fun onGetStatisticCovidVn(statisticCovidVnResponse: StatisticCovidVnResponse) {
 
-    }
+                var index = 1
+                val a = historyCovid[0].listPeopleInDay.dropLast(1).map {
+                    PeopleInDay(it.day, historyCovid[0].listPeopleInDay[index++].people - it.people )
+                }
 
-    override fun onGetStatisticCovidWorld(statisticCovidWorldResponse: StatisticCovidWorldResponse) {
-
+                historyCovid[0].listPeopleInDay = a
+                mLiHistoryCovid.value = historyCovid
+            }
+        }
     }
 
     override fun onGetUserInformation(user: UserResponse) {
@@ -292,13 +334,11 @@ class MainViewModel @Inject constructor(
     override fun onGetActive(activeResponse: ActiveResponse) {
     }
 
-
-
     override fun onUpdateUser(user: UserResponse) {
         when (user.responseCode) {
             ResponseCode.SUCCESS -> {
                 MyApplication.showToast(applicationContext, R.string.success_update_user)
-                getUserInformation()
+                getUserInformationFromServer()
             }
         }
     }
