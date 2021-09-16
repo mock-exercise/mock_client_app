@@ -88,8 +88,8 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    override fun onGetActive(activeResponse: ActiveResponse) {
-    }
+//    override fun onGetActive(activeResponse: ActiveResponse) {
+//    }
 
     override fun onGetGender(genderResponse: GenderResponse) {
     }

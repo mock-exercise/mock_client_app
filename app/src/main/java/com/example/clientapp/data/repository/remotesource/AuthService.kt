@@ -18,7 +18,7 @@ class AuthService @Inject constructor(private val service: ServiceControllerUser
         service.getGender()
     }
 
-    fun getActive(){
-        service.getActive()
-    }
+//    fun getActive(){
+//        service.getActive()
+//    }
 }

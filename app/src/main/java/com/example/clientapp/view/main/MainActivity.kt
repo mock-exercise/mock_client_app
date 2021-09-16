@@ -98,7 +98,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         })
 
         mViewModel.userInformation.observe(this, {
-            if (it.active_id == Constant.UserActive.ACTIVE.ordinal) {
+            if (!it.isActive) {
                 //show dialog
             }
         })

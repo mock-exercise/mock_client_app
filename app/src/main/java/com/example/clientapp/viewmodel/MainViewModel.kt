@@ -331,8 +331,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    override fun onGetActive(activeResponse: ActiveResponse) {
-    }
+//    override fun onGetActive(activeResponse: ActiveResponse) {
+//    }
 
     override fun onUpdateUser(user: UserResponse) {
         when (user.responseCode) {
