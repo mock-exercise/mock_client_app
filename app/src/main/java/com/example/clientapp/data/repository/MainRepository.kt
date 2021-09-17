@@ -58,4 +58,8 @@ class MainRepository @Inject constructor(
     suspend fun clearDataStore(){
         dataStoreManager.clear()
     }
+
+    suspend fun saveAvatarString(avatarString: String){
+        dataStoreManager.saveAvatar(avatarString)
+    }
 }

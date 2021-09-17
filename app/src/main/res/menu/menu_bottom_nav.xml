@@ -12,7 +12,7 @@
         android:iconTint="@null"
         android:title="@string/declare_fragment_title" />
     <item
-        android:id="@+id/meFragment"
+        android:id="@+id/aboutMeFragment"
         android:icon="@drawable/selector_bottom_ic_profile"
         android:iconTint="@null"
         android:title="@string/me_fragment_title" />

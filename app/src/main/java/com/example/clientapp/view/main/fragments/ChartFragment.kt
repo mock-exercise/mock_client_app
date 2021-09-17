@@ -132,7 +132,7 @@ class ChartFragment : Fragment(), View.OnClickListener {
 
                 when (caseNumbers.status) {
                     Constant.StatusCovid.CASE.numberIndex -> {
-                        nameLine = "Nhiễm bệnh"
+                        nameLine = "Nhiễm bệnh mới"
                         lineColor = Color.rgb(198, 252, 84)
                     }
                     Constant.StatusCovid.DEATH.numberIndex -> {

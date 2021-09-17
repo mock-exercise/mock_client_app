@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -20,9 +21,20 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val conte
             preferences[ACCESS_TOKEN]
         }
 
+    val avatarString: Flow<String?>
+        get() = context.dataStore.data.map { preferences ->
+            preferences[USER_AVATAR]
+        }
+
     suspend fun saveAccessTokens(accessToken: Int) {
         context.dataStore.edit { preferences ->
             preferences[ACCESS_TOKEN] = accessToken
+        }
+    }
+
+    suspend fun saveAvatar(avatarString: String) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_AVATAR] = avatarString
         }
     }
 
@@ -34,5 +46,6 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val conte
 
     companion object {
         private val ACCESS_TOKEN = intPreferencesKey("key_access_token")
+        private val USER_AVATAR = stringPreferencesKey("key_user_vatar")
     }
 }

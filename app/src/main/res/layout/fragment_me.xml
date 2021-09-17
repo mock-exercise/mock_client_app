@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="com.example.clientapp.utils.DataBindingUtils" />
-
         <import type="com.example.clientapp.viewmodel.MainViewModel" />
 
         <variable
@@ -33,13 +31,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/MyTextInputLayout"
-            android:layout_marginTop="10dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/spinner_gender"
+            style="@style/MyTextInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_avatar"
             app:startIconDrawable="@drawable/ic_auth_phone">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -56,7 +62,7 @@
             style="@style/MyTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_gender"
             app:startIconDrawable="@drawable/ic_auth_profile">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -98,6 +104,7 @@
                 android:id="@+id/txt_birth"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:focusableInTouchMode="false"
                 android:hint=" Ngày sinh"
                 android:text="@{DataBindingUtils.convertTimestampToDate(viewModel.userInformation.birthday)}"
                 android:textCursorDrawable="@drawable/cursor_color" />

@@ -59,7 +59,7 @@
             app:layout_constraintTop_toBottomOf="@+id/lineChart">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/linearLayoutCompat"
+                android:id="@+id/layout_me"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
@@ -213,7 +213,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+                app:layout_constraintTop_toBottomOf="@+id/layout_me"
                 app:layout_constraintVertical_bias="0.0" />
 
             <androidx.appcompat.widget.AppCompatButton

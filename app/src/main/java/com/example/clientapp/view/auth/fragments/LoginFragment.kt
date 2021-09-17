@@ -18,10 +18,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
     private val mViewModel: AuthViewModel by activityViewModels()
-
 
     override fun handleTasks() {
         initListener()
@@ -42,10 +41,4 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             controller.navigate(action)
         }
     }
-
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        attachToRoot: Boolean?
-    ): FragmentLoginBinding = FragmentLoginBinding.inflate(inflater, container, false)
 }

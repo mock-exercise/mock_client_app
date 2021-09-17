@@ -5,18 +5,51 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import androidx.fragment.app.activityViewModels
 import com.example.clientapp.R
 import com.example.clientapp.base.BaseFragment
 import com.example.clientapp.databinding.FragmentExtraSignUpBinding
+import com.example.clientapp.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class ExtraSignUpFragment : BaseFragment<FragmentExtraSignUpBinding>() {
+@AndroidEntryPoint
+class ExtraSignUpFragment : BaseFragment<FragmentExtraSignUpBinding>(R.layout.fragment_extra_sign_up) {
+
+    private val mViewModel: AuthViewModel by activityViewModels()
     override fun handleTasks() {
+        initView()
 
+        initListener()
     }
 
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        attachToRoot: Boolean?
-    ): FragmentExtraSignUpBinding = FragmentExtraSignUpBinding.inflate(inflater, container, false)
+    private fun initListener() {
+        binding.spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener,
+            AdapterView.OnItemClickListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                mViewModel.setUserGender(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemClick(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+            }
+        }
+    }
+
+    private fun initView() {
+        binding.viewModel = mViewModel
+        binding.lifecycleOwner = this
+    }
 }

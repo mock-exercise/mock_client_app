@@ -9,17 +9,25 @@ import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.asLiveData
 import com.example.clientapp.R
+import com.example.clientapp.data.repository.localsource.DataStoreManager
 import com.example.clientapp.databinding.FragmentMeBinding
+import com.example.clientapp.utils.FuncExtension.convertBase64ToBitmap
+import com.example.clientapp.view.main.dialogs.PickPictureDialog
 import com.example.clientapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MeFragment : Fragment() {
 
     private val mViewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentMeBinding
+
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +56,11 @@ class MeFragment : Fragment() {
     }
 
     private fun initListener() {
+
+        binding.imgAvatar.setOnClickListener {
+            PickPictureDialog.newInstance().show(childFragmentManager, PickPictureDialog.TAG)
+        }
+
         binding.cbAllow.setOnCheckedChangeListener { _, isChecked ->
             binding.btnUpdate.isEnabled = isChecked
         }
@@ -58,7 +71,7 @@ class MeFragment : Fragment() {
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DATE)
 
-            val datePicker = DatePickerDialog(requireContext(), { view, year, month, day ->
+            val datePicker = DatePickerDialog(requireContext(), { _, year, month, day ->
                 binding.txtBirth.apply {
                     setText(getString(R.string.format_date,day, month, year))
                     mViewModel.setUserBirthdate(text.toString())
@@ -93,6 +106,9 @@ class MeFragment : Fragment() {
 
     private fun initObserve() {
 
+        dataStoreManager.avatarString.asLiveData().observe(viewLifecycleOwner, {
+            binding.imgAvatar.setImageBitmap(it?.convertBase64ToBitmap())
+        })
 //        mViewModel.liGender.observe(this,{
 //            val liGenderName = it.map {item -> item.gender_name }
 //
@@ -109,10 +125,4 @@ class MeFragment : Fragment() {
     private fun setupData() {
         mViewModel.getUserInformationFromServer()
     }
-
-//    override fun getFragmentBinding(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        attachToRoot: Boolean?
-//    ): FragmentMeBinding = FragmentMeBinding.inflate(inflater, container, false)
 }

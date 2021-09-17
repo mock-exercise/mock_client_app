@@ -7,6 +7,7 @@ import com.example.clientapp.R
 import com.example.clientapp.app.MyApplication
 import com.example.clientapp.base.Event
 import com.example.clientapp.data.repository.AuthRepository
+import com.example.clientapp.utils.FuncExtension.convertDateStringToTimestamp
 import com.example.connectorlibrary.callback.CallbackConnector
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import com.example.connectorlibrary.enitity.*
@@ -29,6 +30,8 @@ class AuthViewModel @Inject constructor(
     }
 
     private var mInputPhoneNumber: String = ""
+    var liGender = MutableLiveData<List<Gender>>()
+        private set
 
     // Handle Event
     var eventLoading = MutableLiveData<Event<Boolean>>()
@@ -48,18 +51,29 @@ class AuthViewModel @Inject constructor(
 
     private val applicationContext = getApplication() as MyApplication
 
-    // Handle Datastore
+    //handle data from UI
+    var signUpUser = MutableLiveData(User())
 
+    fun setUserSignUpBirthdate(birth: String) {
+        signUpUser.value?.birthday = birth.convertDateStringToTimestamp()
+    }
+
+    fun setUserGender(id: Int) {
+        signUpUser.value?.gender_id = id
+        Log.e(MainViewModel.TAG, "setUserGender: $id")
+    }
+
+
+    // Handle Datastore
 
     private fun saveAuthToken(token: Int) = viewModelScope.launch {
         repository.saveAuthToken(token)
     }
 
     // Server Request
-    fun registerAccount(userUser: User) = viewModelScope.launch {
+    fun registerUser() = viewModelScope.launch {
         showLoading(true)
-        Log.e(TAG, "registerAccount: đăng ký",)
-        repository.registerUserAccount(userUser)
+        signUpUser.value?.let { repository.registerUserAccount(it) }
     }
 
     fun loginAccount(phoneNumber: String) = viewModelScope.launch {
@@ -69,10 +83,21 @@ class AuthViewModel @Inject constructor(
         mInputPhoneNumber = phoneNumber
     }
 
+    private fun getGender() = viewModelScope.launch {
+        showLoading(true)
+        repository.getGender()
+    }
     // Server Response
     override fun onFailureResponse(failureResponse: FailureResponse) {
         showLoading(false)
         when (failureResponse.requestCode) {
+            RequestCode.GET_GENDER -> {
+                when (failureResponse.responseCode) {
+                    ResponseCode.ERROR_LIST_GENDER_NULL -> {
+                        Log.e(MainViewModel.TAG, "onFailureResponse: OOPS! Nhận dữ liệu giới tính thất bại")
+                    }
+                }
+            }
             RequestCode.SIGN_IN_REQ -> {
                 when (failureResponse.responseCode) {
                     ResponseCode.ERROR_SIGN_IN_USER_NOT_FOUND -> {
@@ -97,6 +122,12 @@ class AuthViewModel @Inject constructor(
 //    }
 
     override fun onGetGender(genderResponse: GenderResponse) {
+        showLoading(false)
+        when (genderResponse.responseCode) {
+            ResponseCode.SUCCESS -> {
+                liGender.value = genderResponse.listGender
+            }
+        }
     }
 
     override fun onGetHistoryCovidVn(historyCovidResponse: HistoryCovidResponse) {
@@ -126,6 +157,7 @@ class AuthViewModel @Inject constructor(
 
     override fun onServerConnected() {
         Log.e(TAG, "onServerConnected: Đã connect đến server")
+        getGender()
     }
 
     override fun onUpdateUser(user: UserResponse) {

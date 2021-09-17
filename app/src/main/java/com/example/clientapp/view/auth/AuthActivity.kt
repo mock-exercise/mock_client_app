@@ -64,7 +64,6 @@ class AuthActivity : BaseActivity<ActivityAuthBinding>() {
     private fun initObserve() {
         mViewModel.eventLoading.observe(this, { eventLoading ->
             if (eventLoading.getContentIfNotHandled() == true) {
-
                 dialog.startLoading()
             } else {
                 dialog.dismissLoading()

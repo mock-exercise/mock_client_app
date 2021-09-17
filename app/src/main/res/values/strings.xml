@@ -11,7 +11,6 @@
     <string name="extra_number_format">+ %1$s</string>
     <!--    <string name=" "-->
 
-
     <string name="success_sign_up">Đăng ký thành công</string>
     <string name="success_sign_in"> Đăng nhập thành công</string>
     <string name="success_update_user"> Cập nhật user thành công</string>
@@ -26,9 +25,8 @@
     <string name="congratulation_health_history"> Sức khỏe của bạn an toàn</string>
 
     <string name="notify_healthy_general_safe">Bạn đang hiện đang có sức khỏe tốt.</string>
-    <string name="notify_healthy_general_unsafe">Bạn đang hiện đang có sức khỏe tốt.a</string>
-    <string name="notify_healthy_general_warning">Bạn đang hiện đang có sức khỏe tốt.b</string>
-
+    <string name="notify_healthy_general_unsafe">Hãy tự cách ly ở nhà chúng tôi sẽ liên hệ với bạn để hỗ trợ tư vẫn sớm nhất</string>
+    <string name="notify_healthy_general_warning">Cập nhật sức khỏe để chúng tôi có thể nắm bắt tình hình sức khỏe của bạn</string>
 
     <string name="sign_up">Đăng ký</string>
     <string name="auth_to_login">Bạn đã có tài khoản rồi? Đăng nhập nào</string>
@@ -39,4 +37,5 @@
     <string name="viet_nam">Việt Nam</string>
     <string name="world">Thế giới</string>
     <string name="thong_tin_dich_benh">Thông tin dịch bệnh</string>
+    <string name="string_developing">Tính năng đang phát triển mời bạn trở lại sau !!</string>
 </resources>

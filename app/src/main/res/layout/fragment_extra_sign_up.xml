@@ -1,108 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.auth.fragments.ExtraSignUpFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageView3"
-        android:layout_width="372dp"
-        android:layout_height="296dp"
-        android:src="@drawable/ic_auth_sign_up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
+        <import type="com.example.clientapp.viewmodel.AuthViewModel"/>
+        <variable
+            name="viewModel"
+            type="AuthViewModel" />
+    </data>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_auth_string_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.auth.fragments.ExtraSignUpFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        style="@style/MyTextInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:startIconDrawable="@drawable/ic_auth_gender">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageView3"
+            android:layout_width="372dp"
+            android:layout_height="296dp"
+            android:src="@drawable/ic_auth_sign_up"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_gender"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_auth_string_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+        <Spinner
+            android:id="@+id/spinner_gender"
+            entries="@{viewModel.liGender}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="  Giới tính"
-            android:textCursorDrawable="@drawable/cursor_color" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+<!--        init_new_value="@{0}"-->
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout1"
-        style="@style/MyTextInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:startIconDrawable="@drawable/ic_auth_mail">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout1"
+            style="@style/MyTextInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_gender"
+            app:startIconDrawable="@drawable/ic_auth_mail">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tct_birth"
-            android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tct_birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="  Email"
+                android:text="@={viewModel.signUpUser.email}"
+                android:textCursorDrawable="@drawable/cursor_color" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_birth"
+            style="@style/MyTextInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
+            app:startIconDrawable="@drawable/ic_auth_address">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="  Địa chỉ"
+                android:text="@={viewModel.signUpUser.address}"
+                android:textCursorDrawable="@drawable/cursor_color" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_continue"
+            style="@style/MyAuthButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="  Email"
-            android:textCursorDrawable="@drawable/cursor_color" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:drawableTint="@color/white"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.registerUser()}"
+            android:paddingHorizontal="100dp"
+            android:text="Đăng ký"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.466"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_input_birth"
+            app:layout_constraintVertical_bias="0.558" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
-        style="@style/MyTextInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
-        app:startIconDrawable="@drawable/ic_auth_id">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint=" CMND"
-            android:textCursorDrawable="@drawable/cursor_color" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_birth"
-        style="@style/MyTextInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        app:startIconDrawable="@drawable/ic_auth_address">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="  Địa chỉ"
-            android:textCursorDrawable="@drawable/cursor_color" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_continue"
-        style="@style/MyAuthButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:drawableEnd="@drawable/ic_auth_right"
-        android:drawableTint="@color/white"
-        android:gravity="center"
-        android:paddingHorizontal="100dp"
-        android:text="Tiếp tục"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_input_birth" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

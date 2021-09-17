@@ -1,131 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#E9DAFC"
-    tools:context=".view.auth.fragments.SignUpFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_app_name"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.292" />
+    <data>
+        <import type="com.example.clientapp.viewmodel.AuthViewModel"/>
+        <variable
+            name="viewModel"
+            type="AuthViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_chart_bottom_layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.9">
+        android:layout_height="match_parent"
+        android:background="#E9DAFC"
+        tools:context=".view.auth.fragments.SignUpFragment">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageView"
-            android:layout_width="255dp"
-            android:layout_height="53dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_auth_string_1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageView2"
-            android:layout_width="207dp"
-            android:layout_height="158dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_app_logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/MyTextInputLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            app:startIconDrawable="@drawable/ic_auth_phone">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="  Số điện thoại"
-                android:textCursorDrawable="@drawable/cursor_color" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
-            style="@style/MyTextInputLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-            app:startIconDrawable="@drawable/ic_auth_profile">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="  Họ và tên"
-                android:textCursorDrawable="@drawable/cursor_color" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_birth"
-            style="@style/MyTextInputLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-            app:startIconDrawable="@drawable/ic_auth_birth">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_birth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusableInTouchMode="false"
-                android:hint="  Ngày sinh"
-                android:textCursorDrawable="@drawable/cursor_color" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <CheckBox
-            android:id="@+id/cbAllow"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Để tiếp tục hãy đọc và chấp nhân các điều khoản của ứng dụng "
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_birth"
-            app:layout_constraintWidth_percent="0.7" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnRegister"
-            style="@style/MyAuthButton"
-            android:enabled="false"
-            android:text="@string/sign_up"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cbAllow" />
-
-        <TextView
-            android:id="@+id/txt_to_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@string/auth_to_login"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_app_name"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.292" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_chart_bottom_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.9">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView"
+                android:layout_width="255dp"
+                android:layout_height="53dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_auth_string_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView2"
+                android:layout_width="207dp"
+                android:layout_height="158dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_app_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/spinner_gender"
+                style="@style/MyTextInputLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                app:startIconDrawable="@drawable/ic_auth_phone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="  Số điện thoại"
+                    android:text="@={viewModel.signUpUser.phone_number}"
+                    android:textCursorDrawable="@drawable/cursor_color" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                style="@style/MyTextInputLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_gender"
+                app:startIconDrawable="@drawable/ic_auth_profile">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="  Họ và tên"
+                    android:text="@={viewModel.signUpUser.name}"
+                    android:textCursorDrawable="@drawable/cursor_color" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_birth"
+                style="@style/MyTextInputLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+                app:startIconDrawable="@drawable/ic_auth_birth">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false"
+                    android:hint="  Ngày sinh"
+                    android:textCursorDrawable="@drawable/cursor_color" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/cbAllow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Để tiếp tục hãy đọc và chấp nhân các điều khoản của ứng dụng "
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_birth"
+                app:layout_constraintWidth_percent="0.7" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnContinue"
+                style="@style/MyAuthButton"
+                android:enabled="false"
+                android:text="Tiếp tục"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cbAllow" />
+
+            <TextView
+                android:id="@+id/txt_to_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/auth_to_login"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.512"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnContinue" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

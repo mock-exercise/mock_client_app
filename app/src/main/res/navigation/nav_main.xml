@@ -12,20 +12,47 @@
         tools:layout="@layout/fragment_chart" >
         <action
             android:id="@+id/action_chartFragment_to_historyDeclareFragment"
-            app:destination="@id/historyDeclareFragment" />
+            app:destination="@id/historyDeclareFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
-    <fragment
-        android:id="@+id/meFragment"
-        android:name="com.example.clientapp.view.main.fragments.MeFragment"
-        android:label="Thông tin cá nhân"
-        tools:layout="@layout/fragment_me" />
-    <fragment
+     <fragment
         android:id="@+id/historyDeclareFragment"
         android:name="com.example.clientapp.view.main.fragments.HistoryDeclareFragment"
         android:label="Lịch sử khai báo"
         tools:layout="@layout/fragment_history_declare" >
-        <action
-            android:id="@+id/action_historyDeclareFragment_to_meFragment"
-            app:destination="@id/meFragment" />
+         <action
+             android:id="@+id/action_historyDeclareFragment_to_aboutMeFragment"
+             app:destination="@id/aboutMeFragment"
+             app:enterAnim="@android:anim/fade_in"
+             app:exitAnim="@android:anim/fade_out" />
     </fragment>
+    <fragment
+        android:id="@+id/aboutMeFragment"
+        android:name="com.example.clientapp.view.main.fragments.AboutMeFragment"
+        android:label="fragment_abo  ut_me"
+        tools:layout="@layout/fragment_about_me" >
+        <action
+            android:id="@+id/action_aboutMeFragment_to_meFragment"
+            app:destination="@id/meFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_aboutMeFragment_to_developmentFragment"
+            app:destination="@id/developmentFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/meFragment"
+        android:name="com.example.clientapp.view.main.fragments.MeFragment"
+        android:label="MeFragment"
+        tools:layout="@layout/fragment_me"/>
+    <fragment
+        android:id="@+id/developmentFragment"
+        android:name="com.example.clientapp.view.main.fragments.DevelopmentFragment"
+        android:label="DevelopmentFragment"
+        tools:layout="@layout/fragment_development"/>
 </navigation>

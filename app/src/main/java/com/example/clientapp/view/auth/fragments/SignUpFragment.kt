@@ -18,49 +18,35 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListener{
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up), View.OnClickListener{
 
     private val mViewModel: AuthViewModel by activityViewModels()
     override fun handleTasks() {
-        initView()
         initListener()
-        initObserve()
+        initView()
     }
 
     private fun initView() {
-    }
-
-    private fun initObserve() {
-
+        binding.viewModel = mViewModel
+        binding.lifecycleOwner = this
     }
 
     private fun initListener() {
-        binding.btnRegister.setOnClickListener(this)
+        binding.btnContinue.setOnClickListener(this)
         binding.cbAllow.setOnClickListener(this)
         binding.txtBirth.setOnClickListener(this)
 
         binding.cbAllow.setOnCheckedChangeListener { _, isChecked ->
-            binding.btnRegister.isEnabled = isChecked
-
+            binding.btnContinue.isEnabled = isChecked
         }
     }
 
     @SuppressLint("SetTextI18n")
     override fun onClick(v: View?) {
         when (v) {
-            binding.btnRegister -> {
-                val phoneNumber = binding.txtPhoneNumber.text.toString()
-                val name = binding.txtName.text.toString()
-
-                val date = "00-00-1999"
-                val simpleFormat = SimpleDateFormat("dd-MM-yyyy", Locale.US).parse(date).time
-
-                mViewModel.registerAccount(
-                    User(
-                        name = name,
-                        phone_number = phoneNumber
-                    )
-                )
+            binding.btnContinue -> {
+                val action = SignUpFragmentDirections.actionSignUpFragmentToExtraSignUpFragment()
+                controller.navigate(action)
             }
             binding.txtToLogin -> {
                 controller.popBackStack()
@@ -72,17 +58,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(), View.OnClickListen
                 val day = calendar.get(Calendar.DATE)
 
                 val datePicker = DatePickerDialog(requireContext(), { view, year, month, day ->
-                    binding.txtBirth.setText("$day-$month-$year")
+                    binding.txtBirth.apply {
+                        setText("$day-$month-$year")
+                        mViewModel.setUserSignUpBirthdate(text.toString())
+                    }
                 }, year, month, day)
                 datePicker.show()
             }
         }
     }
-
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        attachToRoot: Boolean?
-    ): FragmentSignUpBinding = FragmentSignUpBinding.inflate(inflater, container, false)
-
 }

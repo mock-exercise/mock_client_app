@@ -19,9 +19,12 @@ class AuthRepository @Inject constructor(
         service.registerUserAccount(user)
     }
 
+    suspend fun getGender() = safeApiCall {
+        service.getGender()
+    }
+
     // handle data store
     suspend fun saveAuthToken(token: Int) = safeApiCall {
         dataStoreManager.saveAccessTokens(token)
     }
-
 }

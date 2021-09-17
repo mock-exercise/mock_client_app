@@ -1,6 +1,7 @@
 package com.example.clientapp.viewmodel
 
 import android.app.Application
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.clientapp.R
@@ -36,6 +37,12 @@ class MainViewModel @Inject constructor(
     }
 
     // Data From UI
+
+    val mMyImage = MutableLiveData<Bitmap>()
+
+    fun saveImageData(avatarString: String)= viewModelScope.launch{
+        repository.saveAvatarString(avatarString)
+    }
     // Basic Data
     var liGender = MutableLiveData<List<Gender>>()
         private set
@@ -57,7 +64,7 @@ class MainViewModel @Inject constructor(
 
     //Handle Data From UI
 
-    var declaredHealth = Health(list_symptom_id = listOf())
+    private var declaredHealth = Health(list_symptom_id = listOf())
     var isEnableVNButton = MutableLiveData(false)
         private set
 
