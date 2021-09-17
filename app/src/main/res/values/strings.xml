@@ -9,15 +9,25 @@
     <string name="healthy">an toàn</string>
     <string name="format_date">%1$d-%2$d-%3$d</string>
     <string name="extra_number_format">+ %1$s</string>
-<!--    <string name=" "-->
+    <!--    <string name=" "-->
 
 
     <string name="success_sign_up">Đăng ký thành công</string>
     <string name="success_sign_in"> Đăng nhập thành công</string>
-    <string name="success_insert_health"> Khai báo sức khỏe thành công</string>
     <string name="success_update_user"> Cập nhật user thành công</string>
     <string name="success_get_user_information"> Lấy thông tin user thành công</string>
     <string name="success_get_user_health"> Lấy thông tin sức khỏe user thành công</string>
+
+    <string name="failure_insert_health">Khai báo sức khỏe thất bại</string>
+    <string name="success_insert_health">Khai báo sức khỏe thành công</string>
+
+    <string name="suggest_not_initial_health_history"> Hãy cập nhật sức khỏe của bạn</string>
+    <string name="warning_health_history"> Bạn bị nghi nhiễm</string>
+    <string name="congratulation_health_history"> Sức khỏe của bạn an toàn</string>
+
+    <string name="notify_healthy_general_safe">Bạn đang hiện đang có sức khỏe tốt.</string>
+    <string name="notify_healthy_general_unsafe">Bạn đang hiện đang có sức khỏe tốt.a</string>
+    <string name="notify_healthy_general_warning">Bạn đang hiện đang có sức khỏe tốt.b</string>
 
 
     <string name="sign_up">Đăng ký</string>
@@ -29,5 +39,4 @@
     <string name="viet_nam">Việt Nam</string>
     <string name="world">Thế giới</string>
     <string name="thong_tin_dich_benh">Thông tin dịch bệnh</string>
-
 </resources>

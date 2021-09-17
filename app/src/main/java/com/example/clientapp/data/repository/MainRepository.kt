@@ -1,13 +1,15 @@
 package com.example.clientapp.data.repository
 
 import com.example.clientapp.base.BaseRepository
+import com.example.clientapp.data.repository.localsource.DataStoreManager
 import com.example.clientapp.data.repository.remotesource.HomeService
 import com.example.connectorlibrary.enitity.Health
 import com.example.connectorlibrary.enitity.User
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
-    private val service: HomeService
+    private val service: HomeService,
+    private val dataStoreManager: DataStoreManager
 ): BaseRepository() {
 
     // Basic information
@@ -50,5 +52,10 @@ class MainRepository @Inject constructor(
 
     suspend fun updateUser(user:User)= safeApiCall{
         service.updateUser(user)
+    }
+
+    // Handle Datastore
+    suspend fun clearDataStore(){
+        dataStoreManager.clear()
     }
 }

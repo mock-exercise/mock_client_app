@@ -30,4 +30,9 @@
         <item name="android:backgroundTint">#EEC2EA</item>
         <item name="android:paddingHorizontal">15dp</item>
     </style>
+
+    <style name="CustomDialogTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>

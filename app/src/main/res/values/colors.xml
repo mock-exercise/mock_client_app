@@ -9,8 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#C6FC54</color>
     <color name="red">#AA0601</color>
+
     <color name="txt_status_healthy">#79A51B</color>
-    <color name="txt_status_not_healthy">#C6FC54</color>
+    <color name="txt_status_not_healthy">#AA0601</color>
+    <color name="txt_status_warning">#C6FC54</color>
+
 
     <color name="auth_text_action">#ADA4A5</color>
 </resources>

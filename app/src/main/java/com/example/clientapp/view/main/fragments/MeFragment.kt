@@ -21,7 +21,6 @@ class MeFragment : Fragment() {
     private val mViewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentMeBinding
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,18 +39,12 @@ class MeFragment : Fragment() {
         return binding.root
     }
 
-
     private fun handleTasks() {
 
         setupData()
 
-        initView()
         initObserve()
         initListener()
-    }
-
-    private fun initView() {
-//        binding.spinner.adapter = spinnerAdapter
     }
 
     private fun initListener() {

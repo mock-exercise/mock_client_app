@@ -11,7 +11,10 @@ import com.example.connectorlibrary.callback.CallbackConnector
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import com.example.connectorlibrary.enitity.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+import java.util.concurrent.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +28,7 @@ class AuthViewModel @Inject constructor(
         val TAG: String = AuthViewModel::class.java.simpleName
     }
 
-    var mInputPhoneNumber: String = ""
+    private var mInputPhoneNumber: String = ""
 
     // Handle Event
     var eventLoading = MutableLiveData<Event<Boolean>>()
@@ -47,6 +50,7 @@ class AuthViewModel @Inject constructor(
 
     // Handle Datastore
 
+
     private fun saveAuthToken(token: Int) = viewModelScope.launch {
         repository.saveAuthToken(token)
     }
@@ -60,6 +64,7 @@ class AuthViewModel @Inject constructor(
 
     fun loginAccount(phoneNumber: String) = viewModelScope.launch {
         showLoading(true)
+        delay(2000)
         repository.loginUser(phoneNumber)
         mInputPhoneNumber = phoneNumber
     }

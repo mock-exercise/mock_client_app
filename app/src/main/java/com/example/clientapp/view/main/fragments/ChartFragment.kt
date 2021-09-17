@@ -40,7 +40,6 @@ class ChartFragment : Fragment(), View.OnClickListener {
     private val myFormatter = object : ValueFormatter() {
         override fun getFormattedValue(value: Float): String {
             val date = Date(value.toLong())
-            //Specify the format you'd like
             val sdf = SimpleDateFormat("MM/dd", Locale.ENGLISH)
             return sdf.format(date)
         }
@@ -138,11 +137,11 @@ class ChartFragment : Fragment(), View.OnClickListener {
                     }
                     Constant.StatusCovid.DEATH.numberIndex -> {
                         nameLine = "Tử vong"
-                        lineColor = Color.rgb(187, 134, 252)
+                        lineColor = Color.rgb(170, 6, 1)
                     }
                     Constant.StatusCovid.RECOVERED.numberIndex -> {
                         nameLine = "Hồi phục"
-                        lineColor = Color.rgb(170, 6, 1)
+                        lineColor = Color.rgb(187, 134, 252)
                     }
                 }
 //                lineColor = Color.rgb(244, 117, 117)

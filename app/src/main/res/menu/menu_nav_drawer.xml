@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/actionInstruction"
+            android:title="Hướng dẫn"/>
+        <item
+            android:id="@+id/actionContact"
+            android:title="Liên lạc"/>
+
+        <item
+            android:id="@+id/actionSetting"
+            android:title="Cài đặt"/>
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/actionInformation"
+            android:title="Thông tin"/>
+        <item
+            android:id="@+id/nav_log_out"
+            android:title="Đăng xuất"/>
+    </group>
+</menu>

@@ -1,27 +1,67 @@
 package com.example.clientapp.view.main.fragments
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.clientapp.base.BaseFragment
+import com.example.clientapp.R
 import com.example.clientapp.databinding.FragmentHistoryDeclareBinding
+import com.example.clientapp.utils.Constant
+import com.example.clientapp.utils.NotifyDialog
 import com.example.clientapp.view.main.adapters.ShowHealthHistoryAdapters
 import com.example.clientapp.viewmodel.MainViewModel
-import com.example.connectorlibrary.enitity.Health
 
-class HistoryDeclareFragment : BaseFragment<FragmentHistoryDeclareBinding>() {
+class HistoryDeclareFragment : Fragment() {
 
     private val mAdapter by lazy { ShowHealthHistoryAdapters() }
     private val mViewModel: MainViewModel by activityViewModels()
+    private lateinit var binding: FragmentHistoryDeclareBinding
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_history_declare,
+            container,
+            false
+        )
 
-    override fun handleTasks() {
+        handleTasks()
+        binding.lifecycleOwner = this
+        binding.viewModel = mViewModel
+
+        return binding.root
+    }
+
+    private fun handleTasks() {
         setUpData()
         initView()
 
         initObserve()
+        initListener()
+    }
+
+    private fun initListener() {
+        binding.btnNotify.setOnClickListener {
+            when(mViewModel.mHealthGeneralType.value?.healthStatus){
+                Constant.HealthGeneralType.SAFE ->{
+                    NotifyDialog.newInstance(Constant.NotifyDialogType.NOTIFY.ordinal, requireContext().getString(R.string.notify_healthy_general_safe)).show(childFragmentManager, NotifyDialog.TAG)
+                }
+                Constant.HealthGeneralType.UNSAFE ->{
+                    NotifyDialog.newInstance(Constant.NotifyDialogType.NOTIFY.ordinal, requireContext().getString(R.string.notify_healthy_general_unsafe)).show(childFragmentManager, NotifyDialog.TAG)
+                }
+                Constant.HealthGeneralType.SUGGEST ->{
+                    NotifyDialog.newInstance(Constant.NotifyDialogType.NOTIFY.ordinal, requireContext().getString(R.string.notify_healthy_general_warning)).show(childFragmentManager, NotifyDialog.TAG)
+                }
+            }
+        }
     }
 
     private fun setUpData() {
@@ -30,18 +70,16 @@ class HistoryDeclareFragment : BaseFragment<FragmentHistoryDeclareBinding>() {
 
     private fun initObserve() {
         mViewModel.liSymptom.observe(viewLifecycleOwner,{
-            Log.e("TAG", "initObserve: da cap nhat trieu chứng", )
             mAdapter.getListSymptom(it)
         })
 
         mViewModel.liStatus.observe(viewLifecycleOwner,{
-            Log.e("TAG", "initObserve: da cap nhat status", )
             mAdapter.getListStatus(it)
         })
 
         mViewModel.liUserHealths.observe(viewLifecycleOwner,{
-            Log.e("TAG", "initObserve: da cap nhap user healths", )
             mAdapter.differ.submitList(it)
+            mViewModel
         })
     }
 
@@ -51,10 +89,4 @@ class HistoryDeclareFragment : BaseFragment<FragmentHistoryDeclareBinding>() {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,true)
         }
     }
-
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        attachToRoot: Boolean?
-    ) = FragmentHistoryDeclareBinding.inflate(inflater, container, false)
 }

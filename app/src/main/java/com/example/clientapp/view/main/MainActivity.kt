@@ -2,11 +2,14 @@ package com.example.clientapp.view.main
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,15 +20,17 @@ import com.example.clientapp.R
 import com.example.clientapp.base.BaseActivity
 import com.example.clientapp.databinding.ActivityMainBinding
 import com.example.clientapp.data.repository.localsource.DataStoreManager
-import com.example.clientapp.utils.Constant
 import com.example.clientapp.utils.LoadingDialog
+import com.example.clientapp.utils.NotifyDialog
+import com.example.clientapp.view.auth.AuthActivity
 import com.example.clientapp.view.main.dialogs.AddDeclareDialog
 import com.example.clientapp.viewmodel.MainViewModel
+import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : BaseActivity<ActivityMainBinding>(), NavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         val TAG: String = MainActivity::class.java.simpleName
@@ -47,13 +52,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var topLevelDestination: Set<Int>
 
-
-    override fun getActivityBinding(layoutInflater: LayoutInflater) =
-        ActivityMainBinding.inflate(layoutInflater)
-
-    override fun getNavHostFragment() =
-        supportFragmentManager.findFragmentById(R.id.mainContainerView) as NavHostFragment
-
     override fun handleTask() {
         initView()
 
@@ -64,11 +62,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun initView() {
         // bottom view
         binding.bottomNavigationView.setupWithNavController(controller)
-
+ 
         topLevelDestination =
             setOf(R.id.chartFragment, R.id.historyDeclareFragment)
         appBarConfiguration = AppBarConfiguration(
-            topLevelDestination,
+            topLevelDestination, binding.drawerLayout
         )
 
         setupActionBarWithNavController(controller, appBarConfiguration)
@@ -107,17 +105,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             if (eventLoading.getContentIfNotHandled() == true) {
                 dialog.startLoading()
             } else {
-                dialog.dismissDialog()
+                dialog.dismissLoading()
             }
         })
 
-        mViewModel.eventError.observe(this, { eventError ->
-            Toast.makeText(this, eventError.getContentIfNotHandled(), Toast.LENGTH_SHORT).show()
+        mViewModel.eventNotify.observe(this, { event ->
+            val notifyInformation = event.getContentIfNotHandled()
+
+            notifyInformation?.let { notify ->
+                NotifyDialog.newInstance(notify.type.ordinal, notify.message).show(supportFragmentManager, NotifyDialog.TAG)
+            }
         })
     }
 
     private fun initListener() {
         lifecycle.addObserver(mViewModel)
+        setNavigationViewListener()
 
         binding.fabButton.setOnClickListener {
             mViewModel.resetDeclareHealth()
@@ -125,7 +128,39 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
+    private fun setNavigationViewListener() {
+        binding.navView.setNavigationItemSelectedListener(this)
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return controller.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun getActivityBinding(layoutInflater: LayoutInflater) =
+        ActivityMainBinding.inflate(layoutInflater)
+
+    override fun getNavHostFragment() =
+        supportFragmentManager.findFragmentById(R.id.mainContainerView) as NavHostFragment
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.nav_log_out->{
+                mViewModel.clearDataStore()
+                AuthActivity.start(this)
+                finish()
+            }
+        }
+
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    override fun onBackPressed() {
+
+        if(binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        }else{
+            super.onBackPressed()
+        }
     }
 }

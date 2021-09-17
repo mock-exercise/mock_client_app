@@ -1,11 +1,10 @@
-package com.example.clientapp.utils
+package com.example.clientapp.binding
 
 import android.R
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.databinding.BindingAdapter
 import com.example.connectorlibrary.enitity.Gender
-import com.google.android.material.textfield.TextInputEditText
 
 
 @BindingAdapter("entries")

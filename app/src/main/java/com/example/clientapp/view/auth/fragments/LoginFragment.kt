@@ -32,23 +32,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
         binding.btnLogin.setOnClickListener {
 
-//            val date = "20-05-2021"
-//            val simpleFormat = SimpleDateFormat("dd-MM-yyyy").parse(date)!!
-//
-//            mViewModel.registerAccount(
-//                User(
-//                    name = "Nam",
-//                    phone_number = "0918780192",
-//                    passport_number = "123",
-//                    birthday = simpleFormat,
-//                    gender_id = 0,
-//                )
-//            )
-//            dialog.startLoading()
             val phoneNumber = binding.txtPhoneNumber.text.toString()
 
             mViewModel.loginAccount(phoneNumber)
-//            mViewModel.registerAccount()
         }
 
         binding.txtToRegister.setOnClickListener{

@@ -8,8 +8,14 @@ import com.example.clientapp.app.MyApplication
 import com.example.clientapp.base.Event
 import com.example.clientapp.data.model.StaticData
 import com.example.clientapp.data.model.TodayStatic
+import com.example.clientapp.data.model.ui.HealthGeneral
+import com.example.clientapp.data.model.ui.NotifyType
 import com.example.clientapp.data.repository.MainRepository
-import com.example.clientapp.utils.Constant
+import com.example.clientapp.utils.Constant.DaysMakeYouInCase
+import com.example.clientapp.utils.Constant.HealthyIndex
+import com.example.clientapp.utils.Constant.NotifyDialogType
+import com.example.clientapp.utils.Constant.StatusCovid
+import com.example.clientapp.utils.Constant.HealthGeneralType
 import com.example.clientapp.utils.FuncExtension.convertDateStringToTimestamp
 import com.example.connectorlibrary.callback.CallbackConnector
 import com.example.connectorlibrary.controller.ServiceControllerUser
@@ -59,18 +65,6 @@ class MainViewModel @Inject constructor(
         declaredHealth = Health(list_symptom_id = listOf())
     }
 
-//    fun toggleIsEnableVNButton(){
-//
-//        val mIsEnableButton = !isEnableVNButton.value!!
-//        isEnableVNButton.value = mIsEnableButton
-//
-//        if(mIsEnableButton){
-//            getStatisticCovidWorld()
-//        }else{
-//            getStatisticCovidVn()
-//        }
-//    }
-
     fun addSymptom(idSymptom: Int) {
 
         val liSymptomID = declaredHealth.list_symptom_id.toMutableList()
@@ -83,13 +77,52 @@ class MainViewModel @Inject constructor(
         declaredHealth.list_symptom_id = liSymptomID
     }
 
-    fun setUserGender(id: Int){
+    fun setUserGender(id: Int) {
         userInformation.value?.gender_id = id
-        Log.e(TAG, "setUserGender: $id", )
+        Log.e(TAG, "setUserGender: $id")
     }
 
-    fun setUserBirthdate(birth: String){
+    fun setUserBirthdate(birth: String) {
         userInformation.value?.birthday = birth.convertDateStringToTimestamp()
+    }
+
+    var mHealthGeneralType = MutableLiveData(HealthGeneral())
+
+    private fun checkHealthStatusGeneral() {
+        val healthGeneralType: HealthGeneral
+        val listUserHealth = liUserHealths.value
+
+        if (listUserHealth.isNullOrEmpty()) {
+            healthGeneralType = HealthGeneral(
+                HealthGeneralType.SUGGEST,
+                applicationContext.getString(R.string.suggest_not_initial_health_history)
+            )
+        } else {
+            val isUserUnsafe = (listUserHealth.takeLast(DaysMakeYouInCase).count {
+                !it.list_symptom_id.contains(HealthyIndex)
+            } == DaysMakeYouInCase)
+
+            healthGeneralType = if (isUserUnsafe) {
+                HealthGeneral(
+                    HealthGeneralType.UNSAFE,
+                    applicationContext.getString(R.string.warning_health_history)
+                )
+            } else {
+                HealthGeneral(
+                    HealthGeneralType.SAFE,
+                    applicationContext.getString(R.string.congratulation_health_history)
+                )
+            }
+        }
+        Log.e(TAG, "checkHealthStatusGeneral: ${healthGeneralType.message} ", )
+        mHealthGeneralType.value = healthGeneralType
+
+    }
+
+    // Handle DataStore
+
+    fun clearDataStore() = viewModelScope.launch {
+        repository.clearDataStore()
     }
 
     // Handle Event
@@ -97,15 +130,15 @@ class MainViewModel @Inject constructor(
     var eventLoading = MutableLiveData<Event<Boolean>>()
         private set
 
-    var eventError = MutableLiveData<Event<String>>()
+    var eventNotify = MutableLiveData<Event<NotifyType>>()
         private set
 
     private fun showLoading(value: Boolean) {
         eventLoading.value = Event(value)
     }
 
-    private fun showError(errorString: String) {
-        eventError.value = Event(errorString)
+    private fun showNotify(notifyType: NotifyType) {
+        eventNotify.value = Event(notifyType)
     }
 
     private val applicationContext = getApplication() as MyApplication
@@ -119,21 +152,20 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getGender() = viewModelScope.launch {
-        Log.e(TAG, "gender: gui", )
+        showLoading(true)
         repository.getGender()
     }
 
     private fun getSymptom() = viewModelScope.launch {
-        Log.e(TAG, "symptom: gui", )
         repository.getSymptom()
     }
 
     private fun getStatus() = viewModelScope.launch {
-        Log.e(TAG, "status: gui", )
         repository.getStatus()
     }
 
     fun insertHealth() = viewModelScope.launch {
+        showLoading(true)
         declaredHealth.declare_time = System.currentTimeMillis()
         userID?.let {
             declaredHealth.user_id = it
@@ -142,11 +174,11 @@ class MainViewModel @Inject constructor(
     }
 
     fun getHistoryCovidVN() = viewModelScope.launch {
+        showLoading(true)
         repository.getHistoryCovidVN()
     }
 
     fun getHistoryCovidWorld() = viewModelScope.launch {
-        Log.e(TAG, "getHistoryCovidWorld: vao day", )
         repository.getHistoryCovidWorld()
     }
 
@@ -162,57 +194,70 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun updateUserInformation() = viewModelScope.launch{
+    fun updateUserInformation() = viewModelScope.launch {
+        showLoading(true)
         userInformation.value?.let { repository.updateUser(it) }
     }
 
     // Server Response
     override fun onFailureResponse(failureResponse: FailureResponse) {
+        showLoading(false)
         when (failureResponse.requestCode) {
             RequestCode.GET_GENDER -> {
                 when (failureResponse.responseCode) {
                     ResponseCode.ERROR_LIST_GENDER_NULL -> {
-                        showError("OOPS! Nhận dữ liệu giới tính thất bại ")
+                        Log.e(TAG, "onFailureResponse: OOPS! Nhận dữ liệu giới tính thất bại")
                     }
                 }
             }
             RequestCode.GET_STATUS -> {
                 when (failureResponse.responseCode) {
                     ResponseCode.ERROR_LIST_STATUS_NULL -> {
-                        showError("OOPS! Nhận dữ liệu trạng thái thất bại ")
+                        Log.e(TAG, "onFailureResponse: OOPS! Nhận dữ liệu trạng thái thất bại")
                     }
                 }
             }
             RequestCode.GET_SYMPTOMS -> {
                 when (failureResponse.responseCode) {
                     ResponseCode.ERROR_LIST_SYMPTOMS_NULL -> {
-                        showError("OOPS! Nhận dữ liệu triệu chứng thất bại ")
+                        Log.e(TAG, "onFailureResponse: OOPS! Nhận dữ liệu triệu chứng thất bại ")
                     }
                 }
             }
             RequestCode.INSERT_HEALTH -> {
                 when (failureResponse.responseCode) {
                     ResponseCode.ERROR_INSERT_HEALTH ->
-                        showError("OOPS! Server không thể thêm khai báo của bạn")
+                        showNotify(
+                            NotifyType(
+                                type = NotifyDialogType.ERROR,
+                                applicationContext.getString(R.string.failure_insert_health)
+                            )
+                        )
                 }
             }
             RequestCode.GET_HEALTHS -> {
                 when (failureResponse.responseCode) {
                     ResponseCode.ERROR_LIST_HEATHS_NOT_FOUND ->
-                        showError("OOPS! Server không nhận đc dữ liệu sức khỏe của bạn")
+                        Log.e(
+                            TAG,
+                            "onFailureResponse: OOPS! Server không nhận đc dữ liệu sức khỏe của bạn "
+                        )
                 }
             }
             RequestCode.GET_USER -> {
                 when (failureResponse.responseCode) {
                     ResponseCode.ERROR_USER_NOT_FOUND -> {
-                        showError("OOPS! Không nhận được dữ liệu thông tin user")
+                        Log.e(
+                            TAG,
+                            "onFailureResponse: OOPS! Không nhận được dữ liệu thông tin user "
+                        )
                     }
                 }
             }
             RequestCode.UPDATE_USER -> {
                 when (failureResponse.responseCode) {
                     ResponseCode.ERROR_UPDATE_USER -> {
-                        showError("OOPS! Không thể cập nhật user")
+                        Log.e(TAG, "onFailureResponse: OOPS! Không thể cập nhật user ")
                     }
                 }
             }
@@ -220,27 +265,27 @@ class MainViewModel @Inject constructor(
     }
 
     override fun onGetGender(genderResponse: GenderResponse) {
+        showLoading(false)
         when (genderResponse.responseCode) {
             ResponseCode.SUCCESS -> {
                 liGender.value = genderResponse.listGender
-                Log.e(TAG, "onGetGender: nhan thanh cong", )
             }
         }
     }
 
     override fun onGetStatus(statusResponse: StatusResponse) {
+        showLoading(false)
         when (statusResponse.responseCode) {
             ResponseCode.SUCCESS -> {
-                Log.e(TAG, "onGetstatus: nhan thanh cong", )
                 liStatus.value = statusResponse.listStatuses
             }
         }
     }
 
     override fun onGetSymptom(symptomResponse: SymptomResponse) {
+        showLoading(false)
         when (symptomResponse.responseCode) {
             ResponseCode.SUCCESS -> {
-                Log.e(TAG, "onGetsymptom: nhan thanh cong", )
                 liSymptom.value = symptomResponse.listSymptom
             }
         }
@@ -250,27 +295,33 @@ class MainViewModel @Inject constructor(
         private set
 
     val mTodayStaticAll = MutableLiveData<MutableList<StaticData>>().apply {
-        value?.add(StaticData(Constant.StatusCovid.CASE.numberIndex))
-        value?.add(StaticData(Constant.StatusCovid.DEATH.numberIndex))
-        value?.add(StaticData(Constant.StatusCovid.RECOVERED.numberIndex))
+        value?.add(StaticData(StatusCovid.CASE.numberIndex))
+        value?.add(StaticData(StatusCovid.DEATH.numberIndex))
+        value?.add(StaticData(StatusCovid.RECOVERED.numberIndex))
     }
 
-
     override fun onGetHistoryCovidVn(historyCovidResponse: HistoryCovidResponse) {
-        when(historyCovidResponse.responseCode){
-            ResponseCode.SUCCESS ->{
-                Log.e(TAG, "onGetHistoryCovidVn: nhan thanh cong", )
+        showLoading(false)
+        when (historyCovidResponse.responseCode) {
+            ResponseCode.SUCCESS -> {
+                Log.e(TAG, "onGetHistoryCovidVn: nhan thanh cong")
                 val historyCovid = historyCovidResponse.listHistoryCovid
                 val lastInx = historyCovid.size - 1
 
                 mTodayStaticAll.value = historyCovid.map {
-                    StaticData(it.status, TodayStatic(it.listPeopleInDay[lastInx].people, it.listPeopleInDay[lastInx].people - it.listPeopleInDay[lastInx - 1].people))
+                    StaticData(
+                        it.status,
+                        TodayStatic(
+                            it.listPeopleInDay[lastInx].people,
+                            it.listPeopleInDay[lastInx].people - it.listPeopleInDay[lastInx - 1].people
+                        )
+                    )
                 }.toMutableList()
 
 
                 var index = 1
                 val a = historyCovid[0].listPeopleInDay.dropLast(1).map {
-                    PeopleInDay(it.day, historyCovid[0].listPeopleInDay[index++].people - it.people )
+                    PeopleInDay(it.day, historyCovid[0].listPeopleInDay[index++].people - it.people)
                 }
 
                 historyCovid[0].listPeopleInDay = a
@@ -280,20 +331,27 @@ class MainViewModel @Inject constructor(
     }
 
     override fun onGetHistoryCovidWorld(historyCovidResponse: HistoryCovidResponse) {
-        when(historyCovidResponse.responseCode){
-            ResponseCode.SUCCESS ->{
-                Log.e(TAG, "onGetHistoryCovidWorld: nhan thanh cong", )
+        showLoading(false)
+        when (historyCovidResponse.responseCode) {
+            ResponseCode.SUCCESS -> {
+                Log.e(TAG, "onGetHistoryCovidWorld: nhan thanh cong")
                 val historyCovid = historyCovidResponse.listHistoryCovid
                 val lastInx = historyCovid.size - 1
 
                 mTodayStaticAll.value = historyCovid.map {
-                    StaticData(it.status, TodayStatic(it.listPeopleInDay[lastInx].people, it.listPeopleInDay[lastInx].people - it.listPeopleInDay[lastInx - 1].people))
+                    StaticData(
+                        it.status,
+                        TodayStatic(
+                            it.listPeopleInDay[lastInx].people,
+                            it.listPeopleInDay[lastInx].people - it.listPeopleInDay[lastInx - 1].people
+                        )
+                    )
                 }.toMutableList()
 
 
                 var index = 1
                 val a = historyCovid[0].listPeopleInDay.dropLast(1).map {
-                    PeopleInDay(it.day, historyCovid[0].listPeopleInDay[index++].people - it.people )
+                    PeopleInDay(it.day, historyCovid[0].listPeopleInDay[index++].people - it.people)
                 }
 
                 historyCovid[0].listPeopleInDay = a
@@ -303,9 +361,9 @@ class MainViewModel @Inject constructor(
     }
 
     override fun onGetUserInformation(user: UserResponse) {
+        showLoading(false)
         when (user.responseCode) {
             ResponseCode.SUCCESS -> {
-                MyApplication.showToast(applicationContext, R.string.success_get_user_information)
                 user.user.let {
                     userInformation.value = it
                 }
@@ -314,27 +372,34 @@ class MainViewModel @Inject constructor(
     }
 
     override fun onGetUserHealths(healthResponse: HealthResponse) {
+        showLoading(false)
         when (healthResponse.responseCode) {
             ResponseCode.SUCCESS -> {
-                MyApplication.showToast(applicationContext, R.string.success_get_user_health)
                 liUserHealths.value = healthResponse.listHealths
+                checkHealthStatusGeneral()
             }
         }
     }
 
     override fun onInsertHealth(healthResponse: HealthResponse) {
+        showLoading(false)
         when (healthResponse.responseCode) {
             ResponseCode.SUCCESS -> {
-                MyApplication.showToast(applicationContext, R.string.success_insert_health)
                 liUserHealths.value = healthResponse.listHealths
+                checkHealthStatusGeneral()
+
+                showNotify(
+                    NotifyType(
+                        type = NotifyDialogType.SUCCESS,
+                        applicationContext.getString(R.string.success_insert_health)
+                    )
+                )
             }
         }
     }
 
-//    override fun onGetActive(activeResponse: ActiveResponse) {
-//    }
-
     override fun onUpdateUser(user: UserResponse) {
+        showLoading(false)
         when (user.responseCode) {
             ResponseCode.SUCCESS -> {
                 MyApplication.showToast(applicationContext, R.string.success_update_user)
@@ -351,12 +416,12 @@ class MainViewModel @Inject constructor(
     }
 
     override fun onServerConnected() {
-        Log.e(TAG, "onServerConnected: connect thanh cong", )
+        showLoading(false)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
-        Log.e(TAG, "addCallback: vao di")
+        showLoading(true)
         service.addCallback(this)
     }
 
