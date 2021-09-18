@@ -15,7 +15,7 @@ fun TextInputLayout.setAutoValidate(
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             if (isAutoValidated)
-                validate(*validators)
+                 validate(*validators)
             else
                 error = null
         }

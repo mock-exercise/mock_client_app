@@ -10,6 +10,7 @@ import com.example.clientapp.base.BaseFragment
 import com.example.clientapp.data.repository.localsource.DataStoreManager
 import com.example.clientapp.databinding.FragmentMeBinding
 import com.example.clientapp.utils.FuncExtension.convertBase64ToBitmap
+import com.example.clientapp.validate.*
 import com.example.clientapp.view.main.dialogs.PickPictureDialog
 import com.example.clientapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,18 +25,19 @@ class MeFragment : BaseFragment<FragmentMeBinding>(R.layout.fragment_me) {
     @Inject
     lateinit var dataStoreManager: DataStoreManager
 
-
     override fun handleTasks() {
 
         setupData()
 
+        addBaseValidation()
         initView()
         initObserve()
         initListener()
+        mViewModel.validation.autoValidate()
     }
 
     private fun initView() {
-        binding.viewModel =  mViewModel
+        binding.viewModel = mViewModel
         binding.lifecycleOwner = this
     }
 
@@ -57,7 +59,7 @@ class MeFragment : BaseFragment<FragmentMeBinding>(R.layout.fragment_me) {
 
             val datePicker = DatePickerDialog(requireContext(), { _, year, month, day ->
                 binding.txtBirth.apply {
-                    setText(getString(R.string.format_date,day, month, year))
+                    setText(getString(R.string.format_date, day, month, year))
                     mViewModel.setUserBirthdate(text.toString())
                 }
             }, year, month, day)
@@ -97,5 +99,66 @@ class MeFragment : BaseFragment<FragmentMeBinding>(R.layout.fragment_me) {
 
     private fun setupData() {
         mViewModel.getUserInformationFromServer()
+    }
+
+    private fun addBaseValidation() {
+        mViewModel.validation.apply {
+            addBaseValidation(
+                BaseValidation(
+                    binding.phoneInputLayout,
+                    true,
+                    listOf(
+                        RequiredValidator(getString(R.string.error_required, "Số điện thoại")),
+                        RegexValidator(
+                            getString(R.string.regex_phone),
+                            getString(R.string.error_regex_phone)
+                        )
+                    )
+                )
+            )
+            addBaseValidation(
+                BaseValidation(
+                    binding.nameInputLayout,
+                    true,
+                    listOf(
+                        RequiredValidator(
+                            getString(R.string.error_required, "Họ và tên"),
+                        ),
+                        LengthValidator(
+                            10, 20, getString(R.string.error_length_name)
+                        )
+                    )
+                )
+            )
+            addBaseValidation(
+                BaseValidation(
+                    binding.emailInputLayout,
+                    true,
+                    listOf(
+                        RequiredValidator(
+                            getString(R.string.error_required, "Email "),
+                        ),
+                        RegexValidator(
+                            getString(R.string.regex_email),
+                            getString(R.string.error_regex_email)
+                        )
+                    )
+                )
+            )
+            addBaseValidation(
+                BaseValidation(
+                    binding.addressInputLayout,
+                    true,
+                    listOf(
+                        RequiredValidator(
+                            getString(R.string.error_required, "Địa chỉ "),
+                        ),
+                        LengthValidator(
+                            10, 20, getString(R.string.error_length_address)
+                        )
+                    )
+                )
+            )
+        }
     }
 }

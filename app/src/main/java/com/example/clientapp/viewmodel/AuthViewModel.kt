@@ -8,6 +8,8 @@ import com.example.clientapp.app.MyApplication
 import com.example.clientapp.base.Event
 import com.example.clientapp.data.repository.AuthRepository
 import com.example.clientapp.utils.FuncExtension.convertDateStringToTimestamp
+import com.example.clientapp.validate.BaseValidation
+import com.example.clientapp.validate.Validation
 import com.example.connectorlibrary.callback.CallbackConnector
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import com.example.connectorlibrary.enitity.*
@@ -38,7 +40,7 @@ class AuthViewModel @Inject constructor(
 
     var eventError = MutableLiveData<Event<String>>()
         private set
-
+    val validation by lazy { Validation() }
 
     private fun showLoading(value: Boolean) {
         eventLoading.value = Event(value)
@@ -73,21 +75,31 @@ class AuthViewModel @Inject constructor(
     val phoneNumberLogin = MutableLiveData("")
 
     fun registerUser() = viewModelScope.launch {
-        showLoading(true)
-        delay(2000)
-        signUpUser.value?.let { repository.registerUserAccount(it) }
+        if (validation.validate()) {
+            showLoading(true)
+            delay(2000)
+            signUpUser.value?.let { repository.registerUserAccount(it) }
+            validation.setIsValidate(false)
+        }
     }
 
     fun loginAccount() = viewModelScope.launch {
-        showLoading(true)
-        delay(2000)
-        phoneNumberLogin.value?.let { repository.loginUser(it) }
+        if (validation.validate()) {
+            Log.e(TAG, "loginAccount: ")
+            showLoading(true)
+            delay(2000)
+            phoneNumberLogin.value?.let { repository.loginUser(it) }
+            validation.setIsValidate(false)
+        } else {
+            Log.e(TAG, "loginAccount: 1111")
+        }
     }
 
     private fun getGender() = viewModelScope.launch {
         showLoading(true)
         repository.getGender()
     }
+
     // Server Response
     override fun onFailureResponse(failureResponse: FailureResponse) {
         showLoading(false)
@@ -95,7 +107,10 @@ class AuthViewModel @Inject constructor(
             RequestCode.GET_GENDER -> {
                 when (failureResponse.responseCode) {
                     ResponseCode.ERROR_LIST_GENDER_NULL -> {
-                        Log.e(MainViewModel.TAG, "onFailureResponse: OOPS! Nhận dữ liệu giới tính thất bại")
+                        Log.e(
+                            MainViewModel.TAG,
+                            "onFailureResponse: OOPS! Nhận dữ liệu giới tính thất bại"
+                        )
                     }
                 }
             }

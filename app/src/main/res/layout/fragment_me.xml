@@ -10,6 +10,7 @@
         <variable
             name="viewModel"
             type="MainViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +42,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/spinner_gender"
+            android:id="@+id/phoneInputLayout"
             style="@style/MyTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,11 +59,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
+            android:id="@+id/nameInputLayout"
             style="@style/MyTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner_gender"
+            app:layout_constraintTop_toBottomOf="@+id/phoneInputLayout"
             app:startIconDrawable="@drawable/ic_auth_profile">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -75,11 +76,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout3"
+            android:id="@+id/emailInputLayout"
             style="@style/MyTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/nameInputLayout"
             app:startIconDrawable="@drawable/ic_auth_mail">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -112,7 +113,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout7"
+            android:id="@+id/addressInputLayout"
             style="@style/MyTextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +138,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout7"
+            app:layout_constraintTop_toBottomOf="@+id/addressInputLayout"
             app:layout_constraintWidth_percent="0.7" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -162,6 +163,6 @@
             android:layout_marginHorizontal="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+            app:layout_constraintTop_toBottomOf="@+id/emailInputLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -39,4 +39,15 @@
     <string name="thong_tin_dich_benh">Thông tin dịch bệnh</string>
     <string name="string_developing">Tính năng đang phát triển mời bạn trở lại sau !!</string>
     <string name="login">Đăng nhập</string>
+
+    <string name="regex_phone">(09|08|01)?[0-9][0-9]{7}</string>
+    <string name="regex_email">[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+</string>
+
+    <string name="error_required">%s không thể rỗng</string>
+    <string name="error_regex_phone">Số điện thoại phải bắt đầu bằng "01", "08", "01" và có độ dài là 9</string>
+
+    <string name="error_regex_email">Email có dạng abc@xyz.cbd</string>
+
+    <string name="error_length_name">Họ và tên có độ dài từ 10 đến 20</string>
+    <string name="error_length_address">Địa chỉ có độ dài từ 10 đến 50</string>
 </resources>

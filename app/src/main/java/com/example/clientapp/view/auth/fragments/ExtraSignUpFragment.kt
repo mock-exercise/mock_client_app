@@ -1,15 +1,12 @@
 package com.example.clientapp.view.auth.fragments
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.activityViewModels
 import com.example.clientapp.R
 import com.example.clientapp.base.BaseFragment
 import com.example.clientapp.databinding.FragmentExtraSignUpBinding
+import com.example.clientapp.validate.*
 import com.example.clientapp.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,10 +14,16 @@ import dagger.hilt.android.AndroidEntryPoint
 class ExtraSignUpFragment : BaseFragment<FragmentExtraSignUpBinding>(R.layout.fragment_extra_sign_up) {
 
     private val mViewModel: AuthViewModel by activityViewModels()
+
     override fun handleTasks() {
         initView()
 
         initListener()
+
+        addBaseValidation()
+
+        mViewModel.validation.autoValidate()
+
     }
 
     private fun initListener() {
@@ -51,5 +54,39 @@ class ExtraSignUpFragment : BaseFragment<FragmentExtraSignUpBinding>(R.layout.fr
     private fun initView() {
         binding.viewModel = mViewModel
         binding.lifecycleOwner = this
+    }
+
+    private fun addBaseValidation() {
+        mViewModel.validation.apply {
+            addBaseValidation(
+                BaseValidation(
+                    binding.emailInputLayout,
+                    true,
+                    listOf(
+                        RequiredValidator(
+                            getString(R.string.error_required, "Email "),
+                        ),
+                        RegexValidator(
+                            getString(R.string.regex_email),
+                            getString(R.string.error_regex_email)
+                        )
+                    )
+                )
+            )
+            addBaseValidation(
+                BaseValidation(
+                    binding.addressInputLayout,
+                    true,
+                    listOf(
+                        RequiredValidator(
+                            getString(R.string.error_required, "Địa chỉ "),
+                        ),
+                        LengthValidator(
+                            10, 20, getString(R.string.error_length_address)
+                        )
+                    )
+                )
+            )
+        }
     }
 }

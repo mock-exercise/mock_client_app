@@ -1,21 +1,15 @@
 package com.example.clientapp.view.auth.fragments
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.example.clientapp.R
 import com.example.clientapp.base.BaseFragment
 import com.example.clientapp.databinding.FragmentLoginBinding
-import com.example.clientapp.utils.LoadingDialog
+import com.example.clientapp.validate.BaseValidation
+import com.example.clientapp.validate.RegexValidator
+import com.example.clientapp.validate.RequiredValidator
+import com.example.clientapp.validate.Validation
 import com.example.clientapp.viewmodel.AuthViewModel
-import com.example.connectorlibrary.enitity.User
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
@@ -24,8 +18,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     override fun handleTasks() {
         initListener()
-
+        addBaseValidation()
         initView()
+        mViewModel.validation.autoValidate()
     }
 
     private fun initView() {
@@ -35,9 +30,27 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     private fun initListener() {
 
-        binding.txtToRegister.setOnClickListener{
+        binding.txtToRegister.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             controller.navigate(action)
+        }
+    }
+
+    private fun addBaseValidation() {
+        mViewModel.validation.apply {
+            addBaseValidation(
+                BaseValidation(
+                    binding.phoneInputLayout,
+                    true,
+                    listOf(
+                        RequiredValidator(getString(R.string.error_required, "Số điện thoại")),
+                        RegexValidator(
+                            getString(R.string.regex_phone),
+                            getString(R.string.error_regex_phone)
+                        )
+                    )
+                )
+            )
         }
     }
 }

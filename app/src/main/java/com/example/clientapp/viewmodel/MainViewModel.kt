@@ -18,6 +18,7 @@ import com.example.clientapp.utils.Constant.NotifyDialogType
 import com.example.clientapp.utils.Constant.StatusCovid
 import com.example.clientapp.utils.Constant.HealthGeneralType
 import com.example.clientapp.utils.FuncExtension.convertDateStringToTimestamp
+import com.example.clientapp.validate.Validation
 import com.example.connectorlibrary.callback.CallbackConnector
 import com.example.connectorlibrary.controller.ServiceControllerUser
 import com.example.connectorlibrary.enitity.*
@@ -36,6 +37,7 @@ class MainViewModel @Inject constructor(
         val TAG: String = MainViewModel::class.java.simpleName
     }
 
+    val validation by lazy { Validation() }
     // Data From UI
 
     val mMyImage = MutableLiveData<Bitmap>()
@@ -206,8 +208,11 @@ class MainViewModel @Inject constructor(
     }
 
     fun updateUserInformation() = viewModelScope.launch {
-        showLoading(true)
-        userInformation.value?.let { repository.updateUser(it) }
+        if (validation.validate()){
+            showLoading(true)
+            userInformation.value?.let { repository.updateUser(it) }
+            validation.setIsValidate(false)
+        }
     }
 
     // Server Response

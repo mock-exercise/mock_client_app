@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.clientapp.R
 import com.example.clientapp.base.BaseFragment
 import com.example.clientapp.databinding.FragmentSignUpBinding
+import com.example.clientapp.validate.*
 import com.example.clientapp.viewmodel.AuthViewModel
 import com.example.connectorlibrary.enitity.User
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,12 +19,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up), View.OnClickListener{
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up),
+    View.OnClickListener {
 
     private val mViewModel: AuthViewModel by activityViewModels()
+
     override fun handleTasks() {
         initListener()
         initView()
+        addBaseValidation()
+        mViewModel.validation.autoValidate()
     }
 
     private fun initView() {
@@ -45,8 +50,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
     override fun onClick(v: View?) {
         when (v) {
             binding.btnContinue -> {
-                val action = SignUpFragmentDirections.actionSignUpFragmentToExtraSignUpFragment()
-                controller.navigate(action)
+                if (mViewModel.validation.validate()) {
+                    val action =
+                        SignUpFragmentDirections.actionSignUpFragmentToExtraSignUpFragment()
+                    controller.navigate(action)
+                    mViewModel.validation.setIsValidate(false)
+                }
             }
             binding.txtToLogin -> {
                 controller.popBackStack()
@@ -65,6 +74,38 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
                 }, year, month, day)
                 datePicker.show()
             }
+        }
+    }
+
+    private fun addBaseValidation() {
+        mViewModel.validation.apply {
+            addBaseValidation(
+                BaseValidation(
+                    binding.phoneInputLayout,
+                    true,
+                    listOf(
+                        RequiredValidator(getString(R.string.error_required, "Số điện thoại")),
+                        RegexValidator(
+                            getString(R.string.regex_phone),
+                            getString(R.string.error_regex_phone)
+                        )
+                    )
+                )
+            )
+            addBaseValidation(
+                BaseValidation(
+                    binding.nameInputLayout,
+                    true,
+                    listOf(
+                        RequiredValidator(
+                            getString(R.string.error_required, "Họ và tên"),
+                        ),
+                        LengthValidator(
+                            10, 20, getString(R.string.error_length_name)
+                        )
+                    )
+                )
+            )
         }
     }
 }
