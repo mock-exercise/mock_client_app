@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.clientapp.viewmodel.AuthViewModel"/>
+        <import type="com.example.clientapp.viewmodel.AuthViewModel" />
+
         <variable
             name="viewModel"
             type="AuthViewModel" />

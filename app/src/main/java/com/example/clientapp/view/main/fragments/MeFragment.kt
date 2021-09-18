@@ -1,16 +1,12 @@
 package com.example.clientapp.view.main.fragments
 
 import android.app.DatePickerDialog
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.asLiveData
 import com.example.clientapp.R
+import com.example.clientapp.base.BaseFragment
 import com.example.clientapp.data.repository.localsource.DataStoreManager
 import com.example.clientapp.databinding.FragmentMeBinding
 import com.example.clientapp.utils.FuncExtension.convertBase64ToBitmap
@@ -21,38 +17,26 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MeFragment : Fragment() {
+class MeFragment : BaseFragment<FragmentMeBinding>(R.layout.fragment_me) {
 
     private val mViewModel: MainViewModel by activityViewModels()
-    private lateinit var binding: FragmentMeBinding
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_me,
-            container,
-            false
-        )
 
-        handleTasks()
-        binding.viewModel =  mViewModel
-        binding.lifecycleOwner = this
-
-        return binding.root
-    }
-
-    private fun handleTasks() {
+    override fun handleTasks() {
 
         setupData()
 
+        initView()
         initObserve()
         initListener()
+    }
+
+    private fun initView() {
+        binding.viewModel =  mViewModel
+        binding.lifecycleOwner = this
     }
 
     private fun initListener() {
@@ -109,17 +93,6 @@ class MeFragment : Fragment() {
         dataStoreManager.avatarString.asLiveData().observe(viewLifecycleOwner, {
             binding.imgAvatar.setImageBitmap(it?.convertBase64ToBitmap())
         })
-//        mViewModel.liGender.observe(this,{
-//            val liGenderName = it.map {item -> item.gender_name }
-//
-//            spinnerAdapter.clear()
-//            spinnerAdapter.addAll(*liGenderName.toTypedArray())
-//            spinnerAdapter.notifyDataSetChanged()
-//        })
-
-//        mViewModel.userInformation.observe(this, {
-//
-//        })
     }
 
     private fun setupData() {

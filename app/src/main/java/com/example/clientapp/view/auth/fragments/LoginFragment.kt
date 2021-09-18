@@ -24,17 +24,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     override fun handleTasks() {
         initListener()
+
+        initView()
     }
 
-    @SuppressLint("SimpleDateFormat")
+    private fun initView() {
+        binding.viewModel = mViewModel
+        binding.lifecycleOwner = this
+    }
+
     private fun initListener() {
-
-        binding.btnLogin.setOnClickListener {
-
-            val phoneNumber = binding.txtPhoneNumber.text.toString()
-
-            mViewModel.loginAccount(phoneNumber)
-        }
 
         binding.txtToRegister.setOnClickListener{
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpFragment()

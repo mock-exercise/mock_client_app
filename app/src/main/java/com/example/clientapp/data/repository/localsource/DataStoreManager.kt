@@ -38,6 +38,14 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val conte
         }
     }
 
+    suspend fun removeTokenUser(){
+        context.dataStore.edit { preferences ->
+            if(preferences.contains(ACCESS_TOKEN)){
+                preferences.remove(ACCESS_TOKEN)
+            }
+        }
+    }
+
     suspend fun clear() {
         context.dataStore.edit { preferences ->
             preferences.clear()
@@ -46,6 +54,6 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val conte
 
     companion object {
         private val ACCESS_TOKEN = intPreferencesKey("key_access_token")
-        private val USER_AVATAR = stringPreferencesKey("key_user_vatar")
+        private val USER_AVATAR = stringPreferencesKey("key_user_avatar")
     }
 }

@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.example.clientapp.viewmodel.AuthViewModel" />
 
+        <variable
+            name="viewModel"
+            type="AuthViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,6 +77,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/txt_phone_number"
                     android:layout_width="match_parent"
+                    android:text="@={viewModel.phoneNumberLogin}"
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -85,8 +90,9 @@
                 android:drawableStart="@drawable/ic_auth_login"
                 android:drawableTint="@color/white"
                 android:gravity="center"
+                android:onClick="@{() -> viewModel.loginAccount()}"
                 android:paddingHorizontal="100dp"
-                android:text="Đăng nhập"
+                android:text="@string/login"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toTopOf="@+id/txt_to_register"
                 app:layout_constraintEnd_toEndOf="parent"
