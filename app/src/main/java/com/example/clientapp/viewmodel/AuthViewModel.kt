@@ -53,7 +53,7 @@ class AuthViewModel @Inject constructor(
 
     //handle data from UI
     var signUpUser = MutableLiveData(User())
-    
+
 
     fun setUserSignUpBirthdate(birth: String) {
         signUpUser.value?.birthday = birth.convertDateStringToTimestamp()
