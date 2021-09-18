@@ -10,37 +10,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.clientapp.R
+import com.example.clientapp.base.BaseFragment
 import com.example.clientapp.databinding.FragmentHistoryDeclareBinding
 import com.example.clientapp.utils.Constant
 import com.example.clientapp.utils.NotifyDialog
 import com.example.clientapp.view.main.adapters.ShowHealthHistoryAdapters
 import com.example.clientapp.viewmodel.MainViewModel
 
-class HistoryDeclareFragment : Fragment() {
+class HistoryDeclareFragment : BaseFragment<FragmentHistoryDeclareBinding>(R.layout.fragment_history_declare) {
 
     private val mAdapter by lazy { ShowHealthHistoryAdapters() }
     private val mViewModel: MainViewModel by activityViewModels()
-    private lateinit var binding: FragmentHistoryDeclareBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_history_declare,
-            container,
-            false
-        )
-
-        handleTasks()
-        binding.lifecycleOwner = this
-        binding.viewModel = mViewModel
-
-        return binding.root
-    }
-
-    private fun handleTasks() {
+    override fun handleTasks() {
         setUpData()
         initView()
 
@@ -84,6 +66,9 @@ class HistoryDeclareFragment : Fragment() {
     }
 
     private fun initView() {
+        binding.lifecycleOwner = this
+        binding.viewModel = mViewModel
+
         binding.recycleView.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,true)

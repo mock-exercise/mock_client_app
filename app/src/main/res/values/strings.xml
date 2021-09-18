@@ -38,4 +38,5 @@
     <string name="world">Thế giới</string>
     <string name="thong_tin_dich_benh">Thông tin dịch bệnh</string>
     <string name="string_developing">Tính năng đang phát triển mời bạn trở lại sau !!</string>
+    <string name="login">Đăng nhập</string>
 </resources>

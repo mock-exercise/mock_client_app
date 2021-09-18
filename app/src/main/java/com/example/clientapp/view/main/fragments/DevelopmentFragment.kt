@@ -8,29 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.clientapp.R
+import com.example.clientapp.base.BaseFragment
 import com.example.clientapp.databinding.FragmentDevelopmentBinding
 
-class DevelopmentFragment : Fragment() {
+class DevelopmentFragment : BaseFragment<FragmentDevelopmentBinding>(R.layout.fragment_development) {
 
-    private lateinit var binding: FragmentDevelopmentBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_development,
-            container,
-            false
-        )
-
-        handleTasks()
-
-        return binding.root
-    }
-
-    private fun handleTasks() {
+    override fun handleTasks() {
         (binding.imgAvatar.background as AnimationDrawable).start()
     }
 }

@@ -2,14 +2,7 @@ package com.example.clientapp.view.main.fragments
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.os.Bundle
-import android.service.autofill.Dataset
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.example.clientapp.R
 import com.example.clientapp.base.BaseFragment
@@ -25,16 +18,14 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class ChartFragment : Fragment(), View.OnClickListener {
+class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart), View.OnClickListener {
 
     private val mViewModel: MainViewModel by activityViewModels()
-    private lateinit var binding: FragmentChartBinding
     private lateinit var mLineChart: LineChart
 
     private val myFormatter = object : ValueFormatter() {
@@ -45,23 +36,8 @@ class ChartFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
 
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_chart,
-            container,
-            false
-        )
-
-        handleTasks()
-        return binding.root
-    }
-
-    private fun handleTasks() {
+    override fun handleTasks() {
 
         setUpData()
 

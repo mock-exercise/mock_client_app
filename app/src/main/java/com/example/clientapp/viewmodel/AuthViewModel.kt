@@ -29,7 +29,6 @@ class AuthViewModel @Inject constructor(
         val TAG: String = AuthViewModel::class.java.simpleName
     }
 
-    private var mInputPhoneNumber: String = ""
     var liGender = MutableLiveData<List<Gender>>()
         private set
 
@@ -64,7 +63,6 @@ class AuthViewModel @Inject constructor(
         Log.e(MainViewModel.TAG, "setUserGender: $id")
     }
 
-
     // Handle Datastore
 
     private fun saveAuthToken(token: Int) = viewModelScope.launch {
@@ -72,16 +70,18 @@ class AuthViewModel @Inject constructor(
     }
 
     // Server Request
+    val phoneNumberLogin = MutableLiveData("")
+
     fun registerUser() = viewModelScope.launch {
         showLoading(true)
+        delay(2000)
         signUpUser.value?.let { repository.registerUserAccount(it) }
     }
 
-    fun loginAccount(phoneNumber: String) = viewModelScope.launch {
+    fun loginAccount() = viewModelScope.launch {
         showLoading(true)
         delay(2000)
-        repository.loginUser(phoneNumber)
-        mInputPhoneNumber = phoneNumber
+        phoneNumberLogin.value?.let { repository.loginUser(it) }
     }
 
     private fun getGender() = viewModelScope.launch {

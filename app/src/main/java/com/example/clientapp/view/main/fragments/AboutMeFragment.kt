@@ -1,16 +1,11 @@
 package com.example.clientapp.view.main.fragments
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.asLiveData
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.clientapp.R
+import com.example.clientapp.base.BaseFragment
 import com.example.clientapp.data.repository.localsource.DataStoreManager
 import com.example.clientapp.databinding.FragmentAboutMeBinding
 import com.example.clientapp.databinding.LayoutOptionMeFragmentBinding
@@ -20,32 +15,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AboutMeFragment : Fragment(), View.OnClickListener {
+class AboutMeFragment : BaseFragment<FragmentAboutMeBinding>(R.layout.fragment_about_me), View.OnClickListener {
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
 
     private val mViewModel: MainViewModel by activityViewModels()
-    private lateinit var binding: FragmentAboutMeBinding
     private lateinit var mLayoutButton: LayoutOptionMeFragmentBinding
-    private lateinit var controller: NavController
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_about_me,
-            container,
-            false
-        )
 
-        handleTasks()
-        return binding.root
-    }
-
-    private fun handleTasks() {
+    override fun handleTasks() {
         initView()
 
         initListener()

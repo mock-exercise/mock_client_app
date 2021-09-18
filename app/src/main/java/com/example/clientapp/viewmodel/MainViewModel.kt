@@ -132,6 +132,10 @@ class MainViewModel @Inject constructor(
         repository.clearDataStore()
     }
 
+    fun clearTokenUser() = viewModelScope.launch {
+        repository.removeTokenUser()
+    }
+
     // Handle Event
 
     var eventLoading = MutableLiveData<Event<Boolean>>()
